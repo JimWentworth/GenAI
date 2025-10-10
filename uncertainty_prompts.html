@@ -54,14 +54,6 @@
       margin-bottom:1rem;
       max-width: 72ch;
     }
-    .meta{
-      display:flex;
-      gap:.75rem;
-      align-items:center;
-      flex-wrap:wrap;
-      color:var(--muted);
-      font-size:.95rem;
-    }
     main{
       max-width: 980px;
       margin: 0 auto;
@@ -92,16 +84,6 @@
         grid-template-columns: 1fr 1fr;
       }
     }
-    .pill{
-      display:inline-flex;
-      align-items:center; gap:.5rem;
-      background: transparent;
-      border:1px solid var(--border);
-      border-radius:999px;
-      padding:.35rem .7rem;
-      color:var(--muted);
-      font-size:.9rem;
-    }
     details{
       margin-top:.3rem;
       border-top:1px dashed var(--border);
@@ -120,8 +102,8 @@
       margin:.5rem 0 0;
     }
     pre{
-      background: #0a0c14;
-      color: var(--code);
+      background: #1e1e1e;  /* dark background */
+      color: #f8f8f2;        /* light text */
       border-radius:10px;
       padding: .9rem 1rem;
       overflow:auto;
@@ -172,12 +154,7 @@
 <body>
   <header>
     <h1>Reducing Hallucinations: Prompts that Make Models Admit Uncertainty</h1>
-    <p class="subtitle">A practical set of prompt patterns to curb fabrication, surface unknowns, and favor accuracy over fluency. Copy what you need, as‑is.</p>
-    <div class="meta">
-      <span class="pill">📚 Classroom handout</span>
-      <span class="pill">🧪 Evidence‑first prompting</span>
-      <span class="pill">🛡️ Uncertainty by design</span>
-    </div>
+    <p class="subtitle">A practical set of prompt patterns to curb fabrication, surface unknowns, and favor accuracy over fluency. Copy what you need, as-is.</p>
   </header>
 
   <main>
@@ -213,7 +190,7 @@
         </div>
         <details>
           <summary>Why it helps</summary>
-          Pushes the model to self‑assess instead of bluffing.
+          Pushes the model to self-assess instead of bluffing.
         </details>
       </article>
 
@@ -231,7 +208,7 @@
       </article>
 
       <article class="card">
-        <h2>4) Known‑Unknown Separation</h2>
+        <h2>4) Known-Unknown Separation</h2>
         <p>Classify facts before composing an answer.</p>
         <div class="codewrap">
           <button class="copy" data-target="p4">Copy</button>
@@ -244,7 +221,7 @@
       </article>
 
       <article class="card">
-        <h2>5) Self‑Check Stage</h2>
+        <h2>5) Self-Check Stage</h2>
         <p>Insert a verification pause before responding.</p>
         <div class="codewrap">
           <button class="copy" data-target="p5">Copy</button>
@@ -270,8 +247,8 @@
       </article>
 
       <article class="card">
-        <h2>7) Per‑Statement Certainty Labels</h2>
-        <p>Force sentence‑level confidence tags.</p>
+        <h2>7) Per-Statement Certainty Labels</h2>
+        <p>Force sentence-level confidence tags.</p>
         <div class="codewrap">
           <button class="copy" data-target="p7">Copy</button>
           <pre id="p7">Answer in bullet points. After each bullet, append (Certain) or (Uncertain). Only include “Certain” items in your conclusion.</pre>
@@ -284,7 +261,7 @@
     </section>
 
     <section class="card">
-      <h2>Drop‑In Anti‑Hallucination Wrappers</h2>
+      <h2>Drop-In Anti-Hallucination Wrappers</h2>
       <p>Use these when you need a quick, general safety net.</p>
       <div class="codewrap">
         <button class="copy" data-target="w1">Copy</button>
@@ -297,7 +274,7 @@
     </section>
 
     <section class="card">
-      <h2>Task‑Specific Shells</h2>
+      <h2>Task-Specific Shells</h2>
       <p>Swap the bracketed text to fit coding, research, or teaching.</p>
       <div class="codewrap">
         <button class="copy" data-target="s1">Copy</button>
@@ -305,11 +282,11 @@
       </div>
       <div class="codewrap">
         <button class="copy" data-target="s2">Copy</button>
-        <pre id="s2">[Research] Provide findings only if you can cite peer‑reviewed sources. If you cannot, return “no verified evidence.” Include a confidence rating per finding.</pre>
+        <pre id="s2">[Research] Provide findings only if you can cite peer-reviewed sources. If you cannot, return “no verified evidence.” Include a confidence rating per finding.</pre>
       </div>
       <div class="codewrap">
         <button class="copy" data-target="s3">Copy</button>
-        <pre id="s3">[Teaching] Summarize this topic. Use two sections: “What’s well‑established” and “Active debates/unknowns.” Do not blur the two. Link to primary sources where possible.</pre>
+        <pre id="s3">[Teaching] Summarize this topic. Use two sections: “What’s well-established” and “Active debates/unknowns.” Do not blur the two. Link to primary sources where possible.</pre>
       </div>
     </section>
 
