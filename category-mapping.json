@@ -1,0 +1,35 @@
+{
+  "mappings": {
+    "interactions/h5p": "H5P Learning Activities",
+    "interactions": "Interactive Demos",
+    "study_master": "Study Tools",
+    "verb_sorter": "Course Design Tools",
+    "course_design": "Course Design Tools",
+    "visual_literacy": "Visual Communication",
+    "workload_calculator": "Faculty Resources",
+    "canvas_course": "Canvas Course Materials",
+    "ai_frameworks": "AI Framework Explorer",
+    "gpt_tester": "ChatGPT Demos",
+    "chatgpt": "ChatGPT Demos",
+    "mind_map": "Mind Mapping",
+    "llms": "LLM Comparisons",
+    "manus": "Manus Portal"
+    "common_cartridge": "Course Design Tools"
+    "chatgpt_edu": "ChatGPT Demos"
+
+  },
+  "icon_overrides": {
+    "H5P Learning Activities": "🎯",
+    "Interactive Demos": "🎮",
+    "Study Tools": "📚",
+    "Course Design Tools": "✏️",
+    "Visual Communication": "🎨",
+    "Faculty Resources": "👨‍🏫",
+    "Canvas Course Materials": "🎓",
+    "AI Framework Explorer": "🤖",
+    "ChatGPT Demos": "💬",
+    "Mind Mapping": "🗺️",
+    "LLM Comparisons": "🧠",
+    "Faculty Portal": "📖"
+  }
+}
