@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Iterative Prompt Loop – Branching Scenario</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    padding: 20px;
+    color: #222;
+  }
+  h2 { color: #13294b; }
+  h3 { color: #13294b; margin-top: 20px; }
+  .box {
+    background: #ffffff;
+    border-radius: 8px;
+    border: 2px solid #ccc;
+    padding: 14px;
+    margin-top: 12px;
+  }
+  .ai-snippet {
+    background: #f9fbff;
+    border-left: 4px solid #13294b;
+    padding: 10px;
+    font-size: 14px;
+    margin-top: 8px;
+  }
+  .choices {
+    margin-top: 14px;
+  }
+  .choices p {
+    margin-bottom: 8px;
+  }
+  .choices button {
+    padding: 8px 12px;
+    margin: 4px 6px 0 0;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    background: #e8eef7;
+    font-size: 14px;
+  }
+  .choices button:hover {
+    background: #c5d3e7;
+  }
+  #feedback {
+    margin-top: 12px;
+    padding: 10px;
+    background: #eef7ee;
+    border-left: 6px solid #3c763d;
+    display: none;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+  #summary {
+    margin-top: 18px;
+    padding: 12px;
+    background: #fff8e5;
+    border-left: 6px solid #f0ad4e;
+    display: none;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+  .small {
+    font-size: 13px;
+    color: #555;
+    margin-top: 6px;
+  }
+</style>
+</head>
+<body>
+
+<h2>Iterative Prompt Loop – Branching Scenario</h2>
+<p>
+You’re designing a 60-minute workshop for faculty who are new to generative AI. Your goal is to help them see AI as a <strong>thinking partner</strong>, not just a shortcut.
+</p>
+<p>
+At each step, choose the <strong>next best move</strong> in the collaboration loop:
+<strong>Expand → Evaluate → Refine → Deepen</strong>.
+</p>
+
+<div class="box">
+  <h3>Step <span id="stepNumber">1</span></h3>
+  <div id="stepContent">
+    <!-- Dynamic scenario content goes here -->
+  </div>
+  <div class="choices">
+    <p><strong>What should you ask the AI to do next?</strong></p>
+    <button data-action="expand">Expand</button>
+    <button data-action="evaluate">Evaluate</button>
+    <button data-action="refine">Refine</button>
+    <button data-action="deepen">Deepen</button>
+  </div>
+  <div id="feedback"></div>
+  <p class="small">Hint: there isn't one "magic" move — but some moves make more sense at certain stages than others.</p>
+</div>
+
+<div id="summary"></div>
+
+<script>
+  // Simple state-based branching scenario
+  let currentStep = 1;
+
+  const stepNumberSpan = document.getElementById('stepNumber');
+  const stepContentDiv = document.getElementById('stepContent');
+  const feedbackDiv = document.getElementById('feedback');
+  const summaryDiv = document.getElementById('summary');
+
+  function renderStep() {
+    feedbackDiv.style.display = "none";
+    feedbackDiv.innerHTML = "";
+    summaryDiv.style.display = "none";
+    stepNumberSpan.textContent = currentStep;
+
+    if (currentStep === 1) {
+      stepContentDiv.innerHTML = `
+        <p>
+          You start with a very broad prompt to your AI tool:
+        </p>
+        <div class="ai-snippet">
+          <strong>Your prompt:</strong><br>
+          “Design a 60-minute workshop for faculty on generative AI.”
+        </div>
+        <p>
+          The AI returns a generic outline:
+        </p>
+        <div class="ai-snippet">
+          <strong>AI response (excerpt):</strong><br>
+          “10 minutes – What is generative AI?<br>
+          20 minutes – Overview of popular tools<br>
+          15 minutes – Demonstration of text and image generation<br>
+          15 minutes – Q&amp;A.”
+        </div>
+        <p>
+          The outline is functional, but it does <em>not</em> emphasize AI as a thinking partner. It feels like a basic intro session.
+        </p>
+      `;
+    } else if (currentStep === 2) {
+      stepContentDiv.innerHTML = `
+        <p>
+          You decide to <strong>expand</strong>. You ask the AI:
+        </p>
+        <div class="ai-snippet">
+          <strong>Your prompt:</strong><br>
+          “Don't lock into a single workshop format yet. Generate 8–10 different workshop concepts for faculty new to generative AI. Vary the focus: tools, ethics, student agency, AI as thinking partner, etc.”
+        </div>
+        <p>
+          The AI responds with several options:
+        </p>
+        <div class="ai-snippet">
+          <strong>AI response (excerpt):</strong><br>
+          1. Intro to AI Tools for Teaching<br>
+          2. AI for Grading and Feedback<br>
+          3. AI as a Co-Teacher: Automating Routine Tasks<br>
+          4. AI as a Thinking Partner for Course Design<br>
+          5. AI Ethics and Academic Integrity<br>
+          6. AI for Student Writing Support<br>
+          7. Hands-On Lab: Prompting for Productivity<br>
+          8. Panel Discussion: AI in the Classroom
+        </div>
+        <p>
+          Several of these don’t match your goal, but at least one looks promising.
+        </p>
+      `;
+    } else if (currentStep === 3) {
+      stepContentDiv.innerHTML = `
+        <p>
+          You move to <strong>evaluation</strong> and ask the AI:
+        </p>
+        <div class="ai-snippet">
+          <strong>Your prompt:</strong><br>
+          “From these 8–10 ideas, which 2–3 best align with the goal of helping faculty see AI as a thinking partner rather than a shortcut? Explain your reasoning.”
+        </div>
+        <p>
+          The AI replies:
+        </p>
+        <div class="ai-snippet">
+          <strong>AI response (excerpt):</strong><br>
+          “Best matches:<br>
+          – <em>AI as a Thinking Partner for Course Design</em> – directly emphasizes collaboration, iteration, and human judgment.<br>
+          – <em>AI Ethics and Academic Integrity</em> – can include AI as a partner in critical reasoning.<br>
+          – <em>Hands-On Lab: Prompting for Productivity</em> – partially fits but risks reinforcing ‘shortcut’ framing unless carefully designed.”
+        </div>
+        <p>
+          You choose <strong>“AI as a Thinking Partner for Course Design”</strong> as your primary workshop concept.
+        </p>
+      `;
+    } else if (currentStep === 4) {
+      stepContentDiv.innerHTML = `
+        <p>
+          You ask the AI to refine your chosen concept into a concrete outline:
+        </p>
+        <div class="ai-snippet">
+          <strong>Your prompt:</strong><br>
+          “Turn ‘AI as a Thinking Partner for Course Design’ into a 60-minute workshop outline. Include 3–4 sections, approximate timing, and at least one hands-on activity where faculty practice iterative prompting.”
+        </div>
+        <p>
+          The AI proposes:
+        </p>
+        <div class="ai-snippet">
+          <strong>AI response (excerpt):</strong><br>
+          10 min – Framing: AI as pattern predictor, not thinker<br>
+          15 min – Live demo: Iterative prompting around a course design problem<br>
+          20 min – Small-group activity: Faculty use AI to brainstorm, evaluate, and refine a course idea<br>
+          15 min – Reflection: What should remain firmly in human judgment?
+        </div>
+        <p>
+          The outline is promising, but still a bit abstract. You want it to be more specific and tailored to your faculty.
+        </p>
+      `;
+    } else {
+      stepContentDiv.innerHTML = `<p>Scenario complete.</p>`;
+    }
+  }
+
+  function handleChoice(action) {
+    feedbackDiv.style.display = "block";
+
+    // Determine the correct action for each step
+    let correctAction = "";
+    if (currentStep === 1) correctAction = "expand";
+    if (currentStep === 2) correctAction = "evaluate";
+    if (currentStep === 3) correctAction = "refine";
+    if (currentStep === 4) correctAction = "deepen";
+
+    if (action === correctAction) {
+      // Correct choice
+      feedbackDiv.innerHTML = `<strong>Good choice.</strong> That move fits this stage of the loop.`;
+      // Advance to next step
+      currentStep++;
+
+      if (currentStep > 4) {
+        showSummary();
+      } else {
+        // Small delay so feedback is visible before updating the step
+        setTimeout(renderStep, 600);
+      }
+    } else {
+      // Incorrect choice – detailed feedback by step/action
+      let msg = "";
+
+      if (currentStep === 1) {
+        if (action === "evaluate") {
+          msg = "Evaluation is important, but you’re only seeing one generic idea. If you evaluate now, you’re judging the first pass instead of the space of possibilities. A better move is to <strong>expand</strong> first.";
+        } else if (action === "refine") {
+          msg = "Refinement here would mean polishing an outline you already know is not aligned with your goal. Better to <strong>expand</strong> and ask for multiple workshop concepts.";
+        } else if (action === "deepen") {
+          msg = "Deepening would add detail to a generic workshop concept you don’t really want. Step back and <strong>expand</strong> to get a wider range of options.";
+        }
+      } else if (currentStep === 2) {
+        if (action === "expand") {
+          msg = "You already expanded once and have many options. Expanding again risks creating noise. It’s time to <strong>evaluate</strong> which ideas actually fit your goals.";
+        } else if (action === "refine") {
+          msg = "Refining any one of these options before evaluating them keeps you in “first idea wins” mode. Pause and <strong>evaluate</strong> which concepts truly align first.";
+        } else if (action === "deepen") {
+          msg = "Deepening assumes you’ve chosen a direction. At this point, you haven’t selected a concept yet. Start by <strong>evaluating</strong> the options.";
+        }
+      } else if (currentStep === 3) {
+        if (action === "expand") {
+          msg = "You’ve already generated and evaluated a good set of concepts. Expanding again just postpones decisions. The next move is to <strong>refine</strong> the chosen concept into a usable outline.";
+        } else if (action === "evaluate") {
+          msg = "You just finished evaluation and picked a direction. Staying in evaluation mode can stall progress. Time to <strong>refine</strong> your chosen idea.";
+        } else if (action === "deepen") {
+          msg = "Deepening is powerful once you have a solid outline. Right now, you need that outline first. Use <strong>refine</strong> to turn the concept into a structured plan.";
+        }
+      } else if (currentStep === 4) {
+        if (action === "expand") {
+          msg = "You already have a promising outline. Expanding to new outlines might distract from making this one truly strong. Better to <strong>deepen</strong> it with specifics.";
+        } else if (action === "evaluate") {
+          msg = "Evaluation matters, but just judging the outline won’t make it richer. You’re ready to <strong>deepen</strong> it: add concrete prompts, examples, and likely challenges.";
+        } else if (action === "refine") {
+          msg = "Further refinement might polish the outline, but the bigger gain is adding depth—real examples, detailed activities, faculty prompts. That’s the job of <strong>deepening</strong>.";
+        }
+      }
+
+      feedbackDiv.innerHTML = msg;
+    }
+  }
+
+  function showSummary() {
+    renderStep(); // Render 'complete' state text (optional)
+    summaryDiv.style.display = "block";
+    summaryDiv.innerHTML = `
+      <strong>Loop complete.</strong> You’ve walked through one full cycle of
+      <em>Expand → Evaluate → Refine → Deepen</em> in designing a workshop.<br><br>
+      In your own AI collaborations, notice:
+      <ul>
+        <li>When you skip straight to refinement or deepening without expanding first.</li>
+        <li>When you evaluate too early, based on a single idea.</li>
+        <li>When you expand endlessly without ever refining or deepening into something usable.</li>
+      </ul>
+      <p>
+        <strong>Reflection prompt (for your own notes or a Canvas discussion):</strong><br>
+        Which step in the loop do you tend to overuse (expand, evaluate, refine, or deepen)?<br>
+        Which step do you tend to skip—and how might that be limiting your work with AI?
+      </p>
+    `;
+  }
+
+  // Attach handlers to the buttons
+  document.querySelectorAll('.choices button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const action = btn.getAttribute('data-action');
+      handleChoice(action);
+    });
+  });
+
+  // Initial render
+  renderStep();
+</script>
+
+</body>
+</html>

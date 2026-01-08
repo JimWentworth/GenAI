@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Choosing the Right Level of Customization</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: #f3f4f6;
+    padding: 20px;
+    color: #111827;
+  }
+
+  h1 {
+    color: #13294B;
+    font-size: 1.6rem;
+    margin-bottom: 0.4rem;
+  }
+
+  p.intro {
+    font-size: 1rem;
+    color: #374151;
+    margin-bottom: 1.2rem;
+  }
+
+  .scenario {
+    background: #ffffff;
+    border: 2px solid #d1d5db;
+    padding: 16px;
+    border-radius: 10px;
+    margin-bottom: 18px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+
+  .scenario h2 {
+    font-size: 1.15rem;
+    color: #13294B;
+    margin-top: 0;
+  }
+
+  .choices button {
+    display: block;
+    width: 100%;
+    margin-top: 6px;
+    padding: 10px;
+    font-size: 0.95rem;
+    background: #e5e7eb;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .choices button:hover {
+    background: #d1d5db;
+  }
+
+  .feedback {
+    display: none;
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+  }
+
+  .correct {
+    background: #ecfdf5;
+    border: 1px solid #059669;
+    color: #065f46;
+  }
+
+  .incorrect {
+    background: #fef2f2;
+    border: 1px solid #dc2626;
+    color: #991b1b;
+  }
+
+  .explanation {
+    margin-top: 6px;
+    font-size: 0.9rem;
+    color: #374151;
+  }
+
+  .next-btn {
+    margin-top: 14px;
+    background: #13294B;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+    display: none;
+  }
+</style>
+</head>
+
+<body>
+
+<h1>Choosing the Right Level of Customization</h1>
+<p class="intro">
+For each scenario, choose the best level of customization: 
+<b>Prompt-level</b>, <b>Persistent instructions</b>, or <b>Structural customization (agent/RAG)</b>.
+</p>
+
+<div id="activity">
+
+  <!-- Scenario Template Structure (JS will swap them in/out) -->
+
+</div>
+
+<script>
+const scenarios = [
+  {
+    text: "You’re drafting an email and want the AI to rewrite it in a more concise, professional tone. This is a one-off task.",
+    options: [
+      {label: "Prompt-level customization", correct: true,
+       explanation: "Correct. One-off tasks are best handled with situational prompts."},
+      {label: "Persistent instructions",
+       explanation: "Too strong. You don’t want every future interaction rewritten in this tone."},
+      {label: "Structural customization (agent/RAG)",
+       explanation: "Overkill. You don’t need rules, workflows, or a knowledge base for a single email."}
+    ]
+  },
+  {
+    text: "You regularly ask the AI to summarize dense readings in a specific structure with bullet points and definitions.",
+    options: [
+      {label: "Prompt-level customization",
+       explanation: "Possible, but inefficient since you repeat the same structure every time."},
+      {label: "Persistent instructions", correct: true,
+       explanation: "Correct. Stable preferences like structure and formatting belong in Custom Instructions."},
+      {label: "Structural customization (agent/RAG)",
+       explanation: "Too heavy unless you have a corpus of documents you want the AI to draw from."}
+    ]
+  },
+  {
+    text: "Your department needs an AI tool that can answer policy questions using up-to-date PDFs and must avoid guessing.",
+    options: [
+      {label: "Prompt-level customization",
+       explanation: "Not enough. The AI cannot reliably retain or ground itself in policy documents via prompts alone."},
+      {label: "Persistent instructions",
+       explanation: "Insufficient. These set tone and preferences, not domain knowledge or document retrieval."},
+      {label: "Structural customization (agent/RAG)", correct: true,
+       explanation: "Correct. This requires document grounding, fixed rules, and reliable retrieval."}
+    ]
+  }
+];
+
+let current = 0;
+
+function renderScenario() {
+  const s = scenarios[current];
+  const container = document.getElementById("activity");
+
+  container.innerHTML = `
+    <div class="scenario">
+      <h2>Scenario ${current + 1} of ${scenarios.length}</h2>
+      <p>${s.text}</p>
+
+      <div class="choices">
+        ${s.options.map((opt, i) => `
+          <button onclick="checkAnswer(${i})">${opt.label}</button>
+          <div id="fb-${i}" class="feedback"></div>
+        `).join("")}
+      </div>
+
+      <button id="nextBtn" class="next-btn" onclick="nextScenario()">Next</button>
+    </div>
+  `;
+}
+
+function checkAnswer(index) {
+  const s = scenarios[current];
+  const feedbackEl = document.getElementById(`fb-${index}`);
+
+  // Clear all previous feedback
+  document.querySelectorAll('.feedback').forEach(fb => {
+    fb.style.display = 'none';
+  });
+
+  const choice = s.options[index];
+
+  feedbackEl.style.display = "block";
+  feedbackEl.className = `feedback ${choice.correct ? "correct" : "incorrect"}`;
+  feedbackEl.innerHTML = `
+    <b>${choice.correct ? "Correct!" : "Not quite."}</b>
+    <div class="explanation">${choice.explanation}</div>
+  `;
+
+  document.getElementById("nextBtn").style.display = "inline-block";
+}
+
+function nextScenario() {
+  current++;
+  if (current < scenarios.length) {
+    renderScenario();
+  } else {
+    document.getElementById("activity").innerHTML = `
+      <div class="scenario">
+        <h2>You're done!</h2>
+        <p>You've completed the customization decision activity.</p>
+      </div>
+    `;
+  }
+}
+
+renderScenario();
+</script>
+
+</body>
+</html>

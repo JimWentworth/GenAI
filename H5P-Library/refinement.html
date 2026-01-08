@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Refinement Ladder Artifact</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    padding: 20px;
+    color: #222;
+  }
+  h2 { color: #13294b; }
+  h3 { color: #13294b; margin-top: 20px; }
+  .step {
+    background: #ffffff;
+    border-radius: 8px;
+    border: 2px solid #ccc;
+    padding: 14px;
+    margin-top: 12px;
+  }
+  .step-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+  .step-header span {
+    font-weight: bold;
+  }
+  .badge {
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+    color: #fff;
+    background: #999;
+  }
+  .badge.done {
+    background: #3c763d;
+  }
+  .step-content {
+    margin-top: 10px;
+    display: none;
+  }
+  .step.active .step-content {
+    display: block;
+  }
+  label {
+    font-weight: bold;
+    display: block;
+    margin-top: 8px;
+  }
+  textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 8px;
+    margin-top: 4px;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+  }
+  .small {
+    font-size: 13px;
+    color: #555;
+    margin-top: 4px;
+  }
+  .btn {
+    padding: 8px 12px;
+    margin-top: 10px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: #fff;
+  }
+  .btn-primary {
+    background: #13294b;
+  }
+  .btn-outline {
+    background: #e8eef7;
+    color: #13294b;
+  }
+  .btn-outline:hover {
+    background: #c5d3e7;
+  }
+  #summaryBox {
+    background: #fff8e5;
+    border-left: 4px solid #f0ad4e;
+    border-radius: 6px;
+    padding: 10px;
+    margin-top: 16px;
+    display: none;
+    font-size: 14px;
+  }
+</style>
+</head>
+<body>
+
+<h2>Refinement Ladder Artifact</h2>
+<p>
+Use this ladder to capture one full cycle of <strong>Expand → Refine → Deepen</strong> with an AI tool.
+You can work in a separate AI window and paste key outputs into each step.
+</p>
+
+<div class="step active" id="step1">
+  <div class="step-header">
+    <span>Step 1 – Initial Idea &amp; Expansion</span>
+    <span class="badge" id="badge1">In progress</span>
+  </div>
+  <div class="step-content">
+    <label for="initialIdea">1A. Your initial idea or problem</label>
+    <textarea id="initialIdea" placeholder="Example: I want a short activity that helps students practice critiquing AI output in my 200-level course."></textarea>
+    <div class="small">
+      This is your starting point. Keep it short but real.
+    </div>
+
+    <label for="expansionPrompt">1B. Prompt you used to expand the idea</label>
+    <textarea id="expansionPrompt" placeholder="Example: 'Generate 8–10 possible activity formats that help students critique AI-generated text, with different levels of structure and difficulty.'"></textarea>
+
+    <label for="expansionOutput">1C. AI expansions (paste key options)</label>
+    <textarea id="expansionOutput" placeholder="Paste or summarize the most interesting options the AI gave you."></textarea>
+
+    <button class="btn btn-primary" onclick="markStepDone(1)">Mark Step 1 Complete</button>
+    <div class="small">
+      When you’re ready, collapse this step and open Step 2.
+    </div>
+  </div>
+</div>
+
+<div class="step" id="step2">
+  <div class="step-header">
+    <span>Step 2 – Choose &amp; Refine a Direction</span>
+    <span class="badge" id="badge2">Not started</span>
+  </div>
+  <div class="step-content">
+    <label for="chosenDirection">2A. Which direction did you choose?</label>
+    <textarea id="chosenDirection" placeholder="Describe or paste the option you decided to move forward with."></textarea>
+
+    <label for="refinePrompt">2B. Prompt you used to refine this direction</label>
+    <textarea id="refinePrompt" placeholder="Example: 'Take this activity idea and turn it into a clear set of student-facing instructions, plus a short rubric for success.'"></textarea>
+
+    <label for="refineOutput">2C. Refined AI output (outline or description)</label>
+    <textarea id="refineOutput" placeholder="Paste or summarize the refined version the AI produced."></textarea>
+
+    <button class="btn btn-primary" onclick="markStepDone(2)">Mark Step 2 Complete</button>
+    <div class="small">
+      At this point you should have one reasonably clear, workable direction.
+    </div>
+  </div>
+</div>
+
+<div class="step" id="step3">
+  <div class="step-header">
+    <span>Step 3 – Deepen &amp; Reflect</span>
+    <span class="badge" id="badge3">Not started</span>
+  </div>
+  <div class="step-content">
+    <label for="deepenPrompt">3A. Prompt you used to deepen the idea</label>
+    <textarea id="deepenPrompt" placeholder="Example: 'Deepen this activity by adding specific examples of weak and strong student responses, and suggest common misconceptions students might have.'"></textarea>
+
+    <label for="deepenOutput">3B. Deepened AI output (details, examples, edge cases)</label>
+    <textarea id="deepenOutput" placeholder="Paste or summarize the more detailed version. Focus on what changed or improved."></textarea>
+
+    <label for="reflection">3C. Reflection on the ladder</label>
+    <textarea id="reflection" placeholder="Where did your judgment matter most in this ladder? What did the AI add that you wouldn’t have thought of? What did you have to correct or constrain?"></textarea>
+
+    <button class="btn btn-primary" onclick="markStepDone(3)">Mark Step 3 Complete</button>
+    <div class="small">
+      When all three steps are complete, you can copy this whole ladder as an artifact or submit it in Canvas if requested.
+    </div>
+  </div>
+</div>
+
+<div id="summaryBox">
+  <strong>Refinement Ladder Complete</strong>
+  <p>
+    You’ve documented one full cycle of collaborative refinement with an AI tool:
+  </p>
+  <ul>
+    <li><strong>Step 1 – Expand:</strong> Generated a range of options from an initial idea.</li>
+    <li><strong>Step 2 – Refine:</strong> Selected one direction and shaped it into something workable.</li>
+    <li><strong>Step 3 – Deepen:</strong> Added detail, examples, and nuance—and reflected on your own role.</li>
+  </ul>
+  <p class="small">
+    You can download, copy, or screenshot this ladder as evidence of your process, or reuse the structure for future projects.
+  </p>
+</div>
+
+<script>
+  // Accordion behavior
+  const steps = document.querySelectorAll('.step');
+  steps.forEach(step => {
+    const header = step.querySelector('.step-header');
+    header.addEventListener('click', () => {
+      step.classList.toggle('active');
+    });
+  });
+
+  function markStepDone(stepNumber) {
+    const badge = document.getElementById('badge' + stepNumber);
+    const step = document.getElementById('step' + stepNumber);
+
+    // quick check: at least one field in this step must be non-empty
+    const textareas = step.querySelectorAll('textarea');
+    let hasContent = false;
+    textareas.forEach(t => {
+      if (t.value.trim().length > 0) hasContent = true;
+    });
+
+    if (!hasContent) {
+      alert("Add at least a little content in this step before marking it complete.");
+      return;
+    }
+
+    badge.textContent = "Complete";
+    badge.classList.add('done');
+
+    // Auto-open the next step if it exists
+    const nextStep = document.getElementById('step' + (stepNumber + 1));
+    if (nextStep) {
+      nextStep.classList.add('active');
+    }
+
+    // If all three are marked complete, show summary
+    const allDone = [1,2,3].every(n => {
+      const b = document.getElementById('badge' + n);
+      return b.classList.contains('done');
+    });
+    if (allDone) {
+      document.getElementById('summaryBox').style.display = "block";
+    }
+  }
+</script>
+
+</body>
+</html>

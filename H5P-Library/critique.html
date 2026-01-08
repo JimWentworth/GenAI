@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>What's Missing? Critiquing AI Output</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    padding: 20px;
+    color: #222;
+  }
+  h2 { color: #13294b; }
+  h3 { color: #13294b; margin-top: 20px; }
+  .box {
+    background: #ffffff;
+    border-radius: 8px;
+    border: 2px solid #ccc;
+    padding: 12px;
+    margin-top: 10px;
+  }
+  .ai-output {
+    background: #f9fbff;
+    border-left: 4px solid #13294b;
+    padding: 10px;
+    font-size: 14px;
+  }
+  .checks {
+    margin-top: 10px;
+  }
+  label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+  }
+  #checkBtn, #resetBtn {
+    padding: 10px 16px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    color: white;
+    font-size: 15px;
+  }
+  #checkBtn { background: #13294b; }
+  #resetBtn { background: #d9534f; margin-left: 8px; }
+  #feedback {
+    margin-top: 15px;
+    padding: 12px;
+    background: #eef7ee;
+    border-left: 6px solid #3c763d;
+    display: none;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+  textarea {
+    width: 100%;
+    min-height: 90px;
+    padding: 8px;
+    margin-top: 8px;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+</style>
+</head>
+<body>
+
+<h2>“What’s Missing?” – Critiquing AI Output</h2>
+<p>
+Read the AI-generated paragraph below about <strong>student motivation in large lecture courses</strong>. Then check all critique statements that you believe apply. Some are appropriate; some are not.
+</p>
+
+<div class="box ai-output">
+  <strong>AI-Generated Paragraph:</strong>
+  <p>
+  Student motivation in large lecture courses is mainly a matter of making the lectures more engaging. If instructors use interactive slides, ask a few questions, and show enthusiasm, students will naturally become more motivated. Most motivation problems come from students being distracted by technology or lacking self-discipline, so instructors should focus on setting clear rules about devices and participation. With a few engaging activities and firm expectations, instructors can solve most motivation issues in big classes.
+  </p>
+</div>
+
+<div class="box">
+  <h3>What might be missing?</h3>
+  <p>Check all the critique statements that you think are valid:</p>
+
+  <div class="checks">
+    <label><input type="checkbox" value="c1"> It oversimplifies motivation by focusing almost entirely on instructor performance and enthusiasm.</label>
+    <label><input type="checkbox" value="c2"> It ignores structural factors like course design, assessment strategies, and class size.</label>
+    <label><input type="checkbox" value="c3"> It correctly states that device bans fully solve distraction in large lectures.</label>
+    <label><input type="checkbox" value="c4"> It blames students (“lack self-discipline”) without considering institutional or systemic contributors.</label>
+    <label><input type="checkbox" value="c5"> It doesn’t reference any theories or evidence about motivation (e.g., self-determination theory).</label>
+    <label><input type="checkbox" value="c6"> It acknowledges that some motivation issues may remain unsolved even with good teaching practice.</label>
+  </div>
+
+  <button id="checkBtn">Check My Critique</button>
+  <button id="resetBtn">Reset</button>
+
+  <div id="feedback"></div>
+</div>
+
+<div class="box">
+  <h3>Revision Practice</h3>
+  <p>
+  Write 2–4 sentences that <strong>revise or extend</strong> the AI’s paragraph to address at least one issue you identified above.
+  </p>
+  <textarea placeholder="Type your revised version or extension here..."></textarea>
+</div>
+
+<script>
+  // Correct critiques: c1, c2, c4, c5
+  const correctSet = new Set(["c1","c2","c4","c5"]);
+
+  document.getElementById('checkBtn').onclick = () => {
+    const boxes = document.querySelectorAll('.checks input[type="checkbox"]');
+    let selected = new Set();
+    boxes.forEach(b => {
+      if (b.checked) selected.add(b.value);
+    });
+
+    let correctSelections = 0;
+    let incorrectSelections = 0;
+
+    // Count correct and incorrect
+    boxes.forEach(b => {
+      if (b.checked && correctSet.has(b.value)) {
+        correctSelections++;
+      } else if (b.checked && !correctSet.has(b.value)) {
+        incorrectSelections++;
+      }
+    });
+
+    const missed = [...correctSet].filter(v => !selected.has(v)).length;
+
+    const fb = document.getElementById('feedback');
+    fb.style.display = "block";
+    let msg = `<strong>Critique Summary</strong><br>`;
+    msg += `Correct issues identified: ${correctSelections} / ${correctSet.size}<br>`;
+    msg += `Incorrect issues selected: ${incorrectSelections}<br>`;
+    msg += `Correct issues you didn't select: ${missed}<br><br>`;
+    msg += `Remember: good critique looks for oversimplification, missing perspectives, and unexamined assumptions—not just "sounding plausible."`;
+    fb.innerHTML = msg;
+  };
+
+  document.getElementById('resetBtn').onclick = () => {
+    const boxes = document.querySelectorAll('.checks input[type="checkbox"]');
+    boxes.forEach(b => b.checked = false);
+    document.getElementById('feedback').style.display = "none";
+  };
+</script>
+
+</body>
+</html>
