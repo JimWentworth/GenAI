@@ -1,0 +1,280 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Customization Layers Match – Interaction</title>
+  <style>
+  :root {
+    --illinois-blue: #13294B;
+    --illinois-orange: #E84A27;
+    --bg-light: #f3f4f6;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--bg-light);
+    color: #111827;
+  }
+  header {
+    background: linear-gradient(135deg, var(--illinois-blue), #1f3f73);
+    color: white;
+    padding: 1.4rem 1.5rem;
+  }
+  header .title-wrap {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  header h1 {
+    margin: 0 0 0.25rem;
+    font-size: 1.5rem;
+  }
+  header p {
+    margin: 0;
+    font-size: 0.9rem;
+    opacity: 0.95;
+  }
+  .pill {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    background: var(--illinois-orange);
+    color: white;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.4rem;
+  }
+  main {
+    max-width: 960px;
+    margin: 1.5rem auto 2.5rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(15,23,42,0.08);
+    padding: 1.5rem 1.75rem;
+  }
+  h2 {
+    margin-top: 0;
+    font-size: 1.2rem;
+    color: var(--illinois-blue);
+  }
+  p {
+    font-size: 0.95rem;
+  }
+  button {
+    font-family: inherit;
+  }
+  .columns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  .drop-column {
+    border-radius: 10px;
+    border: 2px dashed #d1d5db;
+    padding: 0.75rem;
+    min-height: 130px;
+    background: #f9fafb;
+  }
+  .drop-column h3 {
+    margin: 0 0 0.25rem;
+    font-size: 0.95rem;
+    color: var(--illinois-blue);
+  }
+  .drop-column p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #6b7280;
+  }
+  .card-pool {
+    margin-top: 1.25rem;
+    border-radius: 10px;
+    border: 1px dashed #d1d5db;
+    padding: 0.75rem;
+    background: #f9fafb;
+  }
+  .card-pool h3 {
+    margin: 0 0 0.35rem;
+    font-size: 0.95rem;
+    color: var(--illinois-blue);
+  }
+  .draggable-card {
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    padding: 0.45rem 0.6rem;
+    margin: 0.25rem 0;
+    font-size: 0.85rem;
+    cursor: grab;
+    box-shadow: 0 4px 10px rgba(15,23,42,0.04);
+  }
+  .draggable-card.dragging {
+    opacity: 0.7;
+    cursor: grabbing;
+  }
+  .drop-column.over {
+    border-color: var(--illinois-orange);
+    background: #fff7f3;
+  }
+  .controls {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  .controls button {
+    border-radius: 999px;
+    border: none;
+    padding: 0.3rem 0.9rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+  .btn-primary {
+    background: var(--illinois-blue);
+    color: white;
+  }
+  .btn-secondary {
+    background: #e5e7eb;
+    color: #111827;
+  }
+  .feedback {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+  }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="title-wrap">
+      <div class="pill">Interaction 1</div>
+      <h1>Match Examples to Customization Layers</h1>
+      <p>Drag each example into the layer it best represents: prompt-level, persistent personalization, or structural customization.</p>
+    </div>
+  </header>
+  <main>
+    <section>
+      <h2>Which layer is which?</h2>
+      <p>Each card describes a way someone might configure or use ChatGPT. Drag it onto the layer that best matches the behavior being changed.</p>
+
+      <div class="columns">
+        <div class="drop-column" data-layer="prompt">
+          <h3>Prompt-level</h3>
+          <p>One-off instructions inside a single conversation.</p>
+        </div>
+        <div class="drop-column" data-layer="persistent">
+          <h3>Persistent personalization</h3>
+          <p>Settings or instructions that carry across conversations.</p>
+        </div>
+        <div class="drop-column" data-layer="structural">
+          <h3>Structural customization</h3>
+          <p>Dedicated agents/flows built for recurring tasks.</p>
+        </div>
+      </div>
+
+      <div class="card-pool" id="cardPool">
+        <h3>Example cards</h3>
+        <div class="draggable-card" draggable="true" data-answer="prompt">
+          “Explain this article as if you’re talking to a first-year student in my intro course.”
+        </div>
+        <div class="draggable-card" draggable="true" data-answer="persistent">
+          Updating your custom instructions so ChatGPT always uses headings, bullets, and a short summary for anything related to your teaching.
+        </div>
+        <div class="draggable-card" draggable="true" data-answer="structural">
+          Creating a custom GPT that checks new syllabi against your department’s official policy documents.
+        </div>
+        <div class="draggable-card" draggable="true" data-answer="prompt">
+          Asking ChatGPT to propose three alternative assignment prompts and then refine one of them for clarity and inclusivity.
+        </div>
+        <div class="draggable-card" draggable="true" data-answer="persistent">
+          Saving a reusable “assignment feedback” prompt template that you paste in whenever you grade drafts.
+        </div>
+        <div class="draggable-card" draggable="true" data-answer="structural">
+          Building a dedicated “FAQ bot” that answers common student questions using only your course site and syllabus as sources.
+        </div>
+      </div>
+
+      <div class="controls">
+        <button class="btn-primary" id="checkBtn">Check answers</button>
+        <button class="btn-secondary" id="resetBtn">Reset</button>
+        <div class="feedback" id="feedback"></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const cards = document.querySelectorAll('.draggable-card');
+    const dropCols = document.querySelectorAll('.drop-column');
+    const pool = document.getElementById('cardPool');
+    let dragged = null;
+
+    cards.forEach(card => {
+      card.addEventListener('dragstart', e => {
+        dragged = card;
+        card.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+      });
+      card.addEventListener('dragend', () => {
+        card.classList.remove('dragging');
+        dragged = null;
+      });
+    });
+
+    [pool, ...dropCols].forEach(zone => {
+      zone.addEventListener('dragover', e => {
+        e.preventDefault();
+        if (zone.classList.contains('drop-column')) {
+          zone.classList.add('over');
+        }
+      });
+      zone.addEventListener('dragleave', () => {
+        zone.classList.remove('over');
+      });
+      zone.addEventListener('drop', e => {
+        e.preventDefault();
+        zone.classList.remove('over');
+        if (dragged) {
+          zone.appendChild(dragged);
+        }
+      });
+    });
+
+    document.getElementById('checkBtn').addEventListener('click', () => {
+      let total = 0;
+      let correct = 0;
+      document.getElementById('feedback').textContent = '';
+      document.querySelectorAll('.draggable-card').forEach(card => {
+        total++;
+        const answer = card.getAttribute('data-answer');
+        const parent = card.parentElement;
+        const layer = parent.getAttribute('data-layer');
+        if (layer === answer) {
+          correct++;
+          card.style.borderColor = '#16a34a';
+        } else {
+          card.style.borderColor = '#b91c1c';
+        }
+      });
+      const fb = document.getElementById('feedback');
+      if (correct === total) {
+        fb.textContent = 'Nice — all examples are matched to the most appropriate layer.';
+        fb.style.color = '#166534';
+      } else {
+        fb.textContent = 'You matched ' + correct + ' of ' + total + '. Look for whether the change affects one conversation, your general settings, or a dedicated agent/workflow.';
+        fb.style.color = '#b91c1c';
+      }
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      document.getElementById('feedback').textContent = '';
+      document.querySelectorAll('.draggable-card').forEach(card => {
+        pool.appendChild(card);
+        card.style.borderColor = '#e5e7eb';
+      });
+    });
+  </script>
+</body>
+</html>

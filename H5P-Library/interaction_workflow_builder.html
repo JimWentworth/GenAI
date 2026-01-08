@@ -1,0 +1,275 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Workflow Builder – Interaction</title>
+  <style>
+  :root {
+    --illinois-blue: #13294B;
+    --illinois-orange: #E84A27;
+    --bg-light: #f3f4f6;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--bg-light);
+    color: #111827;
+  }
+  header {
+    background: linear-gradient(135deg, var(--illinois-blue), #1f3f73);
+    color: white;
+    padding: 1.4rem 1.5rem;
+  }
+  header .title-wrap {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  header h1 {
+    margin: 0 0 0.25rem;
+    font-size: 1.5rem;
+  }
+  header p {
+    margin: 0;
+    font-size: 0.9rem;
+    opacity: 0.95;
+  }
+  .pill {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    background: var(--illinois-orange);
+    color: white;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.4rem;
+  }
+  main {
+    max-width: 960px;
+    margin: 1.5rem auto 2.5rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(15,23,42,0.08);
+    padding: 1.5rem 1.75rem;
+  }
+  h2 {
+    margin-top: 0;
+    font-size: 1.2rem;
+    color: var(--illinois-blue);
+  }
+  p {
+    font-size: 0.95rem;
+  }
+  button {
+    font-family: inherit;
+  }
+  form {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.4fr);
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+  @media (max-width: 840px) {
+    form {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  .field-group {
+    margin-bottom: 0.7rem;
+  }
+  label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.1rem;
+    color: #374151;
+  }
+  select, textarea, input[type="text"] {
+    width: 100%;
+    padding: 0.4rem 0.5rem;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    font-size: 0.9rem;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 2.2rem;
+  }
+  textarea {
+    min-height: 80px;
+  }
+  .helper {
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin-top: 0.1rem;
+  }
+  .controls {
+    margin-top: 0.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  .controls button {
+    border-radius: 999px;
+    border: none;
+    padding: 0.3rem 0.9rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+  .btn-primary {
+    background: var(--illinois-blue);
+    color: white;
+  }
+  .btn-secondary {
+    background: #e5e7eb;
+    color: #111827;
+  }
+  .output-card {
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    background: #f9fafb;
+    padding: 0.85rem 1rem;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+  }
+  .output-card pre {
+    white-space: pre-wrap;
+    font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.85rem;
+    margin: 0.3rem 0 0;
+  }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="title-wrap">
+      <div class="pill">Interaction 3</div>
+      <h1>Design a Small AI Workflow</h1>
+      <p>Fill out the fields to generate a draft workflow description and a reusable prompt you can refine in your own practice.</p>
+    </div>
+  </header>
+  <main>
+    <section>
+      <h2>AI Workflow Builder</h2>
+      <p>Focus on something small and concrete—something you might actually try this term. The goal is clarity, not complexity.</p>
+
+      <form id="workflowForm">
+        <div>
+          <div class="field-group">
+            <label for="workflowType">Workflow type</label>
+            <select id="workflowType" required>
+              <option value="">-- Choose one --</option>
+              <option value="Prompt Library">Prompt Library</option>
+              <option value="Persistent Instructions">Persistent Instructions</option>
+              <option value="Custom GPT Concept">Custom GPT Concept</option>
+            </select>
+            <div class="helper">You can always change this later, but pick the closest fit.</div>
+          </div>
+
+          <div class="field-group">
+            <label for="taskSentence">Task in one sentence</label>
+            <input type="text" id="taskSentence" placeholder="e.g., Help me draft first-pass feedback on weekly reflections.">
+          </div>
+
+          <div class="field-group">
+            <label for="inputs">Inputs</label>
+            <textarea id="inputs" placeholder="What will you feed into the workflow? (e.g., assignment prompts, student drafts, rubric criteria)"></textarea>
+          </div>
+
+          <div class="field-group">
+            <label for="outputs">Outputs</label>
+            <textarea id="outputs" placeholder="What should the AI give back? (e.g., numbered suggestions, example feedback, checklists)"></textarea>
+          </div>
+
+          <div class="field-group">
+            <label for="boundaries">Human boundaries</label>
+            <textarea id="boundaries" placeholder="What stays human-only? (e.g., final grades, accommodation decisions, sensitive emails)"></textarea>
+          </div>
+        </div>
+
+        <div>
+          <div class="field-group">
+            <label for="toneStructure">Tone & structure defaults</label>
+            <textarea id="toneStructure" placeholder="e.g., Student-friendly tone, bullets + headings, 2–3 concrete examples."></textarea>
+          </div>
+
+          <div class="field-group">
+            <label for="risks">Key risks & safeguards</label>
+            <textarea id="risks" placeholder="e.g., Overconfidence, privacy, bias. How will you mitigate them?"></textarea>
+          </div>
+
+          <div class="controls">
+            <button type="button" class="btn-primary" id="generateBtn">Generate workflow summary</button>
+            <button type="button" class="btn-secondary" id="resetBtn3">Reset</button>
+          </div>
+
+          <div class="output-card" id="summaryCard" style="display:none;">
+            <strong>Workflow summary</strong>
+            <pre id="summaryText"></pre>
+          </div>
+
+          <div class="output-card" id="promptCard" style="display:none;">
+            <strong>Reusable prompt draft</strong>
+            <pre id="promptText"></pre>
+          </div>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    document.getElementById('generateBtn').addEventListener('click', () => {
+      const type = (document.getElementById('workflowType').value || '').trim();
+      const task = (document.getElementById('taskSentence').value || '').trim();
+      const inputs = (document.getElementById('inputs').value || '').trim();
+      const outputs = (document.getElementById('outputs').value || '').trim();
+      const boundaries = (document.getElementById('boundaries').value || '').trim();
+      const tone = (document.getElementById('toneStructure').value || '').trim();
+      const risks = (document.getElementById('risks').value || '').trim();
+
+      if (!type || !task) {
+        alert('At minimum, choose a workflow type and describe the task in one sentence.');
+        return;
+      }
+
+      let summary = '';
+      summary += 'Workflow type: ' + type + '\n';
+      summary += 'Task: ' + task + '\n\n';
+      if (inputs) summary += 'Inputs:\n' + inputs + '\n\n';
+      if (outputs) summary += 'Outputs:\n' + outputs + '\n\n';
+      if (boundaries) summary += 'Human boundaries (what stays human-only):\n' + boundaries + '\n\n';
+      if (tone) summary += 'Tone & structure defaults:\n' + tone + '\n\n';
+      if (risks) summary += 'Key risks & safeguards:\n' + risks + '\n';
+
+      const summaryText = document.getElementById('summaryText');
+      summaryText.textContent = summary;
+      document.getElementById('summaryCard').style.display = 'block';
+
+      let prompt = '';
+      prompt += 'You are an assistant helping me with the following workflow: ' + task + '\n\n';
+      prompt += 'Workflow type: ' + type + '.\n';
+      if (inputs) prompt += 'I will provide this kind of input:\n' + inputs + '\n\n';
+      if (outputs) prompt += 'I want you to produce:\n' + outputs + '\n\n';
+      if (tone) prompt += 'Use this tone and structure by default:\n' + tone + '\n\n';
+      if (boundaries) prompt += 'Stay within these boundaries (do NOT automate these decisions):\n' + boundaries + '\n\n';
+      if (risks) prompt += 'Be especially careful about these risks and follow these safeguards:\n' + risks + '\n\n';
+      prompt += 'If any request I make conflicts with these boundaries, ask a clarifying question before proceeding.';
+
+      const promptText = document.getElementById('promptText');
+      promptText.textContent = prompt;
+      document.getElementById('promptCard').style.display = 'block';
+    });
+
+    document.getElementById('resetBtn3').addEventListener('click', () => {
+      document.getElementById('workflowForm').reset();
+      document.getElementById('summaryCard').style.display = 'none';
+      document.getElementById('promptCard').style.display = 'none';
+      document.getElementById('summaryText').textContent = '';
+      document.getElementById('promptText').textContent = '';
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ethics & Risk Classifier – Interaction</title>
+  <style>
+  :root {
+    --illinois-blue: #13294B;
+    --illinois-orange: #E84A27;
+    --bg-light: #f3f4f6;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--bg-light);
+    color: #111827;
+  }
+  header {
+    background: linear-gradient(135deg, var(--illinois-blue), #1f3f73);
+    color: white;
+    padding: 1.4rem 1.5rem;
+  }
+  header .title-wrap {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  header h1 {
+    margin: 0 0 0.25rem;
+    font-size: 1.5rem;
+  }
+  header p {
+    margin: 0;
+    font-size: 0.9rem;
+    opacity: 0.95;
+  }
+  .pill {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    background: var(--illinois-orange);
+    color: white;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.4rem;
+  }
+  main {
+    max-width: 960px;
+    margin: 1.5rem auto 2.5rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(15,23,42,0.08);
+    padding: 1.5rem 1.75rem;
+  }
+  h2 {
+    margin-top: 0;
+    font-size: 1.2rem;
+    color: var(--illinois-blue);
+  }
+  p {
+    font-size: 0.95rem;
+  }
+  button {
+    font-family: inherit;
+  }
+  .scenario-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  .scenario {
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    background: #f9fafb;
+    padding: 0.85rem 1rem;
+    font-size: 0.9rem;
+  }
+  .scenario h3 {
+    margin: 0 0 0.35rem;
+    font-size: 0.96rem;
+    color: var(--illinois-blue);
+  }
+  .scenario p {
+    margin: 0 0 0.5rem;
+  }
+  .scenario select {
+    width: 100%;
+    padding: 0.25rem 0.4rem;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+  }
+  .scenario-feedback {
+    font-size: 0.85rem;
+    margin-top: 0.15rem;
+  }
+  .controls {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .controls button {
+    border-radius: 999px;
+    border: none;
+    padding: 0.3rem 0.9rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+  .btn-primary {
+    background: var(--illinois-blue);
+    color: white;
+  }
+  .btn-secondary {
+    background: #e5e7eb;
+    color: #111827;
+  }
+  .overall-feedback {
+    margin-top: 0.4rem;
+    font-size: 0.9rem;
+  }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="title-wrap">
+      <div class="pill">Interaction 2</div>
+      <h1>Classify the Main Risk</h1>
+      <p>For each scenario, choose the <strong>primary</strong> risk that should concern you most.</p>
+    </div>
+  </header>
+  <main>
+    <section>
+      <h2>Which risk dominates?</h2>
+      <p>All of these scenarios are a little messy. Focus on which risk is most central given how the customization is being used.</p>
+
+      <div class="scenario-grid">
+        <div class="scenario" data-correct="privacy" id="sc1">
+          <h3>Scenario 1: Drafting Feedback from Full Essays</h3>
+          <p>
+            A faculty member uploads a full set of identifiable student essays into a custom GPT to generate
+            individualized feedback suggestions for each student.
+          </p>
+          <select>
+            <option value="">-- Choose the main risk --</option>
+            <option value="privacy">Privacy / confidentiality</option>
+            <option value="bias">Bias / fairness</option>
+            <option value="overconfidence">Overconfidence / misplaced trust</option>
+            <option value="policy">Policy / compliance</option>
+          </select>
+          <div class="scenario-feedback"></div>
+        </div>
+
+        <div class="scenario" data-correct="overconfidence" id="sc2">
+          <h3>Scenario 2: Policy Explainer GPT for Students</h3>
+          <p>
+            An advising office deploys a policy explainer GPT on its website. Students begin treating its
+            answers as the definitive word on deadlines and exceptions.
+          </p>
+          <select>
+            <option value="">-- Choose the main risk --</option>
+            <option value="privacy">Privacy / confidentiality</option>
+            <option value="bias">Bias / fairness</option>
+            <option value="overconfidence">Overconfidence / misplaced trust</option>
+            <option value="policy">Policy / compliance</option>
+          </select>
+          <div class="scenario-feedback"></div>
+        </div>
+
+        <div class="scenario" data-correct="bias" id="sc3">
+          <h3>Scenario 3: “Neutral” Rubric-Tuning GPT</h3>
+          <p>
+            A department builds a custom GPT that suggests rubric tweaks to “standardize grading” across
+            sections, using only past assignments from one instructor as its training examples.
+          </p>
+          <select>
+            <option value="">-- Choose the main risk --</option>
+            <option value="privacy">Privacy / confidentiality</option>
+            <option value="bias">Bias / fairness</option>
+            <option value="overconfidence">Overconfidence / misplaced trust</option>
+            <option value="policy">Policy / compliance</option>
+          </select>
+          <div class="scenario-feedback"></div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button class="btn-primary" id="checkBtn2">Check answers</button>
+        <button class="btn-secondary" id="resetBtn2">Reset</button>
+        <div class="overall-feedback" id="overallFeedback"></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.getElementById('checkBtn2').addEventListener('click', () => {
+      const scenarios = document.querySelectorAll('.scenario');
+      let total = 0;
+      let correctCount = 0;
+      scenarios.forEach(sc => {
+        total++;
+        const correct = sc.getAttribute('data-correct');
+        const select = sc.querySelector('select');
+        const fb = sc.querySelector('.scenario-feedback');
+        const value = select.value;
+        if (!value) {
+          fb.textContent = 'Choose an option to check this scenario.';
+          fb.style.color = '#b45309';
+          return;
+        }
+        if (value === correct) {
+          fb.textContent = 'Yes — that’s the most critical risk here.';
+          fb.style.color = '#166534';
+          correctCount++;
+        } else {
+          fb.textContent = 'That risk is present, but not the main one. Think about what could go wrong first.';
+          fb.style.color = '#b91c1c';
+        }
+      });
+      const overall = document.getElementById('overallFeedback');
+      if (correctCount === total) {
+        overall.textContent = 'You nailed all of them. Nice separation of different risk types.';
+        overall.style.color = '#166534';
+      } else {
+        overall.textContent = 'You matched ' + correctCount + ' of ' + total + '. Revisit any red feedback above.';
+        overall.style.color = '#b91c1c';
+      }
+    });
+
+    document.getElementById('resetBtn2').addEventListener('click', () => {
+      document.getElementById('overallFeedback').textContent = '';
+      document.querySelectorAll('.scenario').forEach(sc => {
+        sc.querySelector('select').value = '';
+        sc.querySelector('.scenario-feedback').textContent = '';
+      });
+    });
+  </script>
+</body>
+</html>
