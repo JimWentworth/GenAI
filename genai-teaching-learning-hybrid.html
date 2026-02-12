@@ -1,0 +1,2406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generative AI in Teaching and Learning</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #13294B;
+            --secondary-color: #E84A27;
+            --text-color: #333;
+            --bg-color: #f5f5f5;
+            --card-bg: #ffffff;
+            --nav-bg: #13294B;
+            --nav-hover: #1a3a66;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-hover: 0 8px 12px rgba(0,0,0,0.15);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+        }
+
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--secondary-color);
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            z-index: 100;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        nav {
+            background-color: var(--nav-bg);
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            box-shadow: var(--shadow);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        nav ul li button {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 15px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        nav ul li button:hover,
+        nav ul li button:focus {
+            background-color: var(--nav-hover);
+            outline: 2px solid var(--secondary-color);
+            outline-offset: -2px;
+        }
+
+        nav ul li button.active {
+            background-color: var(--secondary-color);
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: calc(100vh - 200px);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Home Hero */
+        .home-hero {
+            text-align: center;
+            padding: 100px 20px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--nav-hover) 100%);
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-hover);
+        }
+
+        .home-hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 30px;
+            line-height: 1.2;
+        }
+
+        .home-hero .presenter-info {
+            font-size: 1.5em;
+            margin-top: 20px;
+            line-height: 1.8;
+        }
+
+        .home-hero .presenter-name {
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+
+        /* Section Headers */
+        h2 {
+            color: var(--primary-color);
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: var(--primary-color);
+            font-size: 1.6em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        h4 {
+            color: var(--text-color);
+            font-size: 1.3em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        /* Card Styles */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            border-left: 5px solid var(--secondary-color);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card h3 {
+            color: var(--primary-color);
+            font-size: 1.6em;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .card h4 {
+            color: var(--primary-color);
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            margin-top: 15px;
+        }
+
+        .card p {
+            margin-bottom: 12px;
+            text-align: left;
+        }
+
+        .card ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .card li {
+            margin-bottom: 8px;
+        }
+
+        /* Accordion */
+        .accordion {
+            margin: 30px 0;
+        }
+
+        .accordion-item {
+            background: var(--card-bg);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+            border: none;
+            width: 100%;
+            text-align: left;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .accordion-header:hover,
+        .accordion-header:focus {
+            background: var(--nav-hover);
+            outline: 2px solid var(--secondary-color);
+            outline-offset: -2px;
+        }
+
+        .accordion-header::after {
+            content: '+';
+            font-size: 1.5em;
+            transition: transform 0.3s;
+        }
+
+        .accordion-header.active::after {
+            transform: rotate(45deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 20px;
+        }
+
+        .accordion-content.active {
+            max-height: 3000px;
+            padding: 20px;
+        }
+
+        .accordion-content p {
+            margin-bottom: 12px;
+        }
+
+        .accordion-content ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .accordion-content li {
+            margin-bottom: 8px;
+        }
+
+        .accordion-content h4 {
+            color: var(--primary-color);
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        /* Info boxes */
+        .info-box {
+            background-color: #e8f4f8;
+            border-left: 5px solid var(--secondary-color);
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+
+        .warning-box {
+            background-color: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+
+        /* Example boxes */
+        .example-box {
+            background-color: #f0f0f0;
+            border-left: 5px solid var(--primary-color);
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .example-box strong {
+            color: var(--primary-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Visual diagram styles */
+        .visual-diagram {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .evolution-timeline {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .timeline-item {
+            flex: 1;
+            min-width: 200px;
+            margin: 10px;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--nav-hover) 100%);
+            color: white;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .timeline-item h4 {
+            color: var(--secondary-color);
+            margin: 0 0 10px 0;
+            font-size: 1.4em;
+        }
+
+        .timeline-item p {
+            color: white;
+            text-align: center;
+            margin: 0;
+        }
+
+        .timeline-arrow {
+            font-size: 2em;
+            color: var(--secondary-color);
+            margin: 0 10px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        /* Data classification badges */
+        .data-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin: 5px 5px 5px 0;
+        }
+
+        .badge-public {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .badge-internal {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .badge-sensitive {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .badge-high-risk {
+            background-color: #721c24;
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+            }
+
+            nav ul li button {
+                width: 100%;
+                text-align: left;
+            }
+
+            .home-hero h1 {
+                font-size: 2em;
+            }
+
+            .home-hero .presenter-info {
+                font-size: 1.2em;
+            }
+
+            h2 {
+                font-size: 1.8em;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .evolution-timeline {
+                flex-direction: column;
+            }
+
+            .timeline-arrow {
+                transform: rotate(90deg);
+                margin: 10px 0;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+        }
+
+        @media print {
+            nav {
+                display: none;
+            }
+
+            .tab-content {
+                display: block !important;
+                page-break-after: always;
+            }
+
+            .accordion-content {
+                max-height: none !important;
+                display: block !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <nav role="navigation" aria-label="Main navigation">
+        <ul>
+            <li><button onclick="showTab('home')" id="tab-home" class="active" aria-label="Home">Home</button></li>
+            <li><button onclick="showTab('understanding')" id="tab-understanding" aria-label="Understanding AI">Understanding AI</button></li>
+            <li><button onclick="showTab('paradigm')" id="tab-paradigm" aria-label="Paradigm Shift">Paradigm Shift</button></li>
+            <li><button onclick="showTab('nlp')" id="tab-nlp" aria-label="Natural Language Processing">NLP</button></li>
+            <li><button onclick="showTab('risks')" id="tab-risks" aria-label="Risks and Concerns">Risks & Concerns</button></li>
+            <li><button onclick="showTab('campus')" id="tab-campus" aria-label="Campus Tools">Campus Tools</button></li>
+            <li><button onclick="showTab('prompting')" id="tab-prompting" aria-label="Prompting">Prompting</button></li>
+            <li><button onclick="showTab('tips')" id="tab-tips" aria-label="Practical Tips">Practical Tips</button></li>
+            <li><button onclick="showTab('learn')" id="tab-learn" aria-label="Learn More">Learn More</button></li>
+        </ul>
+    </nav>
+
+    <main id="main-content">
+        <!-- Home Tab -->
+        <div id="content-home" class="tab-content active">
+            <div class="home-hero" role="banner">
+                <h1>Generative AI in Teaching and Learning</h1>
+                <div class="presenter-info">
+                    <span class="presenter-name">Jim Wentworth</span><br>
+                    Associate Director, AI Strategies<br>
+                    The Center for Innovation in Teaching & Learning
+                </div>
+            </div>
+            <div class="info-box">
+                <p><strong>Welcome!</strong> This presentation is designed for University of Illinois Extension workers throughout the state. Whether you're new to generative AI or have some experience, this resource will help you understand how these powerful tools can enhance teaching and learning while being mindful of their limitations and ethical considerations.</p>
+                <p>Navigate through the tabs above to explore different aspects of generative AI in educational contexts. Each section builds on the previous one, but feel free to explore topics in any order that suits your needs.</p>
+            </div>
+        </div>
+
+        <!-- Understanding AI Tab -->
+        <div id="content-understanding" class="tab-content">
+            <h2>Understanding AI</h2>
+            
+            <h3>What is Artificial Intelligence?</h3>
+            <p>Artificial Intelligence refers to computer systems designed to perform tasks that typically require human intelligence. These tasks include learning from experience, recognizing patterns, understanding language, making decisions, and solving problems. AI systems can range from simple rule-based programs to complex neural networks that learn from vast amounts of data.</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Narrow AI (Weak AI)</h3>
+                    <p>Designed to perform specific tasks within a limited domain. Examples include voice assistants like Siri or Alexa, recommendation systems on Netflix or Amazon, and image recognition software.</p>
+                    <p><strong>Key Point:</strong> All current AI systems, including generative AI, fall into this category. They excel at designated tasks but cannot transfer capabilities to unrelated domains.</p>
+                </div>
+
+                <div class="card">
+                    <h3>General AI (Strong AI)</h3>
+                    <p>Theoretical AI that would possess human-like cognitive abilities across all domains. Such systems would understand, learn, and apply knowledge flexibly across any intellectual task.</p>
+                    <p><strong>Key Point:</strong> This level of AI does not currently exist and may never be achieved.</p>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Machine Learning and Deep Learning
+                    </button>
+                    <div class="accordion-content">
+                        <h4>Machine Learning</h4>
+                        <p>Machine Learning is a subset of AI where systems learn from data rather than following explicitly programmed instructions. Instead of being told exactly what to do in every situation, machine learning algorithms identify patterns in data and make predictions or decisions based on those patterns.</p>
+                        
+                        <h4>Deep Learning</h4>
+                        <p>Deep Learning is a specialized form of machine learning that uses artificial neural networks with multiple layers (hence "deep") to process information. These networks are loosely inspired by the structure of the human brain and are particularly effective at processing complex data like images, audio, and text.</p>
+                        
+                        <p><strong>Impact:</strong> Deep learning powers most modern generative AI systems, enabling them to understand and generate human-like text, create images, and perform other sophisticated tasks.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        What Makes Generative AI Different?
+                    </button>
+                    <div class="accordion-content">
+                        <p>Generative AI represents a significant advancement in artificial intelligence capabilities. Unlike previous AI systems that primarily analyzed or classified existing data, generative AI creates new content. These systems can produce text, images, audio, video, and code that did not previously exist.</p>
+
+                        <h4>Key Distinction: Creation vs. Classification</h4>
+                        <p>The key distinction is that generative AI models learn the underlying patterns and structures of their training data, then use this understanding to generate novel outputs. When you ask a generative AI system a question, it does not simply retrieve stored information; instead, it generates a response based on the patterns it has learned from vast amounts of text data.</p>
+
+                        <div class="info-box">
+                            <h4>Probabilistic Generation</h4>
+                            <p>Generative AI systems work by predicting the most likely next word, pixel, or sound based on what came before. They are fundamentally probabilistic, meaning they calculate probabilities for different possible outputs and select from among the most likely options. This is why the same prompt can sometimes produce different responses.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Foundation Models and Large Language Models
+                    </button>
+                    <div class="accordion-content">
+                        <h4>Foundation Models</h4>
+                        <p>Foundation models are large-scale AI models trained on broad, diverse datasets that can be adapted to a wide range of tasks. They serve as a "foundation" that can be fine-tuned for specific applications.</p>
+
+                        <h4>Large Language Models (LLMs)</h4>
+                        <p>Large Language Models like GPT-4, Claude, and Gemini are examples of foundation models specifically designed for language tasks. These models are trained on enormous amounts of text from books, websites, articles, and other sources.</p>
+
+                        <p>Through this training, they develop a sophisticated understanding of:</p>
+                        <ul>
+                            <li>Language patterns and grammar</li>
+                            <li>Context and meaning</li>
+                            <li>Reasoning capabilities</li>
+                            <li>Factual knowledge (though not always accurate)</li>
+                            <li>Stylistic conventions</li>
+                        </ul>
+
+                        <p>The "large" in Large Language Model refers both to the amount of training data and the number of parameters (adjustable values) in the model, which can number in the hundreds of billions.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        How Generative AI Learns
+                    </button>
+                    <div class="accordion-content">
+                        <h4>Initial Training</h4>
+                        <p>The training process for generative AI involves exposing the model to massive datasets and adjusting its internal parameters to minimize prediction errors. For language models, this typically involves predicting the next word in a sequence. Over billions of examples, the model develops an intricate understanding of language structure, facts, reasoning patterns, and even stylistic conventions.</p>
+
+                        <h4>Reinforcement Learning from Human Feedback (RLHF)</h4>
+                        <p>After initial training, many models undergo additional fine-tuning using human feedback to make them more helpful, accurate, and aligned with human values. This process helps models provide more useful and appropriate responses.</p>
+
+                        <p><strong>The Process:</strong></p>
+                        <ol>
+                            <li>Human evaluators review model outputs</li>
+                            <li>They rank responses by quality and appropriateness</li>
+                            <li>The model learns from these preferences</li>
+                            <li>Over time, it becomes better at generating helpful, harmless, and honest responses</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Paradigm Shift Tab -->
+        <div id="content-paradigm" class="tab-content">
+            <h2>Paradigm Shift in Education</h2>
+
+            <h3>A Transformative Moment</h3>
+            <p>The emergence of accessible, powerful generative AI tools represents a paradigm shift in education comparable to the introduction of the internet, calculators, or even the printing press. This technology fundamentally changes how we access information, create content, and approach problem-solving. For educators and learners, understanding this shift is essential to navigating the evolving educational landscape.</p>
+
+            <div class="visual-diagram">
+                <h3>From Information Scarcity to Abundance</h3>
+                <div class="card-grid">
+                    <div class="card">
+                        <h4>Traditional Education Era</h4>
+                        <p><strong>Characteristic:</strong> Information Scarcity</p>
+                        <ul>
+                            <li>Limited access to knowledge</li>
+                            <li>Teachers as knowledge transmitters</li>
+                            <li>Focus on memorization and retention</li>
+                            <li>Carefully curated information sources</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>AI-Enhanced Education Era</h4>
+                        <p><strong>Characteristic:</strong> Information Abundance</p>
+                        <ul>
+                            <li>Unlimited access to generated content</li>
+                            <li>Teachers as facilitators and mentors</li>
+                            <li>Focus on evaluation and synthesis</li>
+                            <li>Critical thinking becomes paramount</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Changing Roles in Education
+                    </button>
+                    <div class="accordion-content">
+                        <h4>The Evolving Role of Educators</h4>
+                        <p>Rather than being replaced, educators' roles are evolving and becoming more important. Teachers are increasingly becoming facilitators, mentors, and designers of learning experiences rather than sole sources of information. The focus shifts to helping learners develop higher-order thinking skills, ethical reasoning, creativity, and the ability to work effectively with AI tools.</p>
+
+                        <p>Educators must now help students understand not just what to know, but how to:</p>
+                        <ul>
+                            <li>Evaluate sources and verify information</li>
+                            <li>Think critically about AI-generated content</li>
+                            <li>Use these tools responsibly and effectively</li>
+                            <li>Recognize bias and limitations in AI outputs</li>
+                            <li>Develop uniquely human capabilities</li>
+                        </ul>
+
+                        <h4>The Evolving Role of Learners</h4>
+                        <p>Students must transition from passive recipients of knowledge to active constructors of understanding. With AI capable of generating essays, solving problems, and creating content, the value of education shifts toward developing uniquely human capabilities:</p>
+                        <ul>
+                            <li>Creativity and original thinking</li>
+                            <li>Ethical reasoning and judgment</li>
+                            <li>Emotional intelligence</li>
+                            <li>Collaboration and communication</li>
+                            <li>Asking meaningful questions</li>
+                        </ul>
+
+                        <p>Learners need to develop skills in prompt engineering, critical evaluation of AI outputs, and understanding when and how to use AI tools appropriately. They must learn to work alongside AI as a collaborative tool rather than using it as a shortcut that bypasses learning.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Rethinking Assessment
+                    </button>
+                    <div class="accordion-content">
+                        <p>Traditional assessment methods face significant challenges in the age of generative AI. When AI can write essays, solve problems, and generate code in seconds, we must reconsider what we assess and how we assess it. This shift presents both challenges and opportunities.</p>
+
+                        <h4>Moving Beyond Traditional Testing</h4>
+                        <p>Multiple-choice tests and standard essays become less effective measures of learning when AI can complete them easily. Assessment must evolve to focus on higher-order skills that AI cannot fully replicate:</p>
+                        <ul>
+                            <li>Original thinking and creativity</li>
+                            <li>Ethical reasoning in complex situations</li>
+                            <li>Creative synthesis of diverse sources</li>
+                            <li>Authentic application of knowledge in real-world contexts</li>
+                            <li>Metacognitive awareness and reflection</li>
+                        </ul>
+
+                        <h4>Authentic Assessment Approaches</h4>
+                        <p>Educators are increasingly adopting authentic assessment methods that better reflect real-world applications and are more resistant to AI shortcuts:</p>
+                        <ul>
+                            <li><strong>Process-Oriented Assessments:</strong> Evaluate thinking and development rather than just final products</li>
+                            <li><strong>Collaborative Projects:</strong> Require human interaction and negotiation</li>
+                            <li><strong>Presentations and Discussions:</strong> Demonstrate understanding in real-time</li>
+                            <li><strong>Portfolios:</strong> Show growth and reflection over time</li>
+                            <li><strong>Performance Tasks:</strong> Apply knowledge in authentic contexts</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Opportunities for Personalization
+                    </button>
+                    <div class="accordion-content">
+                        <p>Generative AI offers unprecedented opportunities for personalized learning. AI tutors can adapt to individual learning styles, provide immediate feedback, offer explanations at appropriate levels, and practice with students at their own pace. This technology can help address the challenge of meeting diverse student needs in large or varied classrooms.</p>
+
+                        <h4>For Extension Workers</h4>
+                        <p>AI tools can help Extension workers:</p>
+                        <ul>
+                            <li>Create customized educational materials for different audiences</li>
+                            <li>Translate content for diverse communities</li>
+                            <li>Adapt reading levels for various literacy backgrounds</li>
+                            <li>Provide 24/7 support for learners across the state</li>
+                            <li>Generate multiple versions of materials for different contexts</li>
+                        </ul>
+
+                        <p>This democratizes access to high-quality educational support regardless of location or time constraints, which is particularly valuable for Extension's statewide mission.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Equity Considerations
+                    </button>
+                    <div class="accordion-content">
+                        <p>While AI offers tremendous potential, it also raises important equity concerns that Extension workers must address:</p>
+
+                        <h4>Access Disparities</h4>
+                        <ul>
+                            <li>Uneven access to advanced AI tools across communities</li>
+                            <li>Digital divide in internet connectivity and devices</li>
+                            <li>Potential widening of existing educational gaps</li>
+                            <li>Some students have sophisticated AI at home while others lack basic access</li>
+                        </ul>
+
+                        <h4>Performance Disparities</h4>
+                        <ul>
+                            <li>AI systems can perpetuate biases from training data</li>
+                            <li>Models may perform differently for different demographic groups</li>
+                            <li>Language barriers for non-native English speakers</li>
+                            <li>Cultural assumptions that don't apply universally</li>
+                        </ul>
+
+                        <p><strong>Action for Extension:</strong> Extension workers must be mindful of these disparities and work to ensure equitable access to AI-enhanced learning opportunities. This includes advocating for universal access, teaching critical evaluation of AI outputs, and ensuring that AI use doesn't disadvantage underserved communities.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Preparing for Continuous Change
+                    </button>
+                    <div class="accordion-content">
+                        <p>The current paradigm shift is not a one-time event but the beginning of continuous, rapid change. AI capabilities are advancing quickly, and new tools emerge regularly. Educational approaches must be flexible and adaptive, focusing on developing learners' capacity to learn, adapt, and think critically rather than mastering specific tools or techniques that may soon be obsolete.</p>
+
+                        <h4>For Extension Workers</h4>
+                        <p>This means cultivating:</p>
+                        <ul>
+                            <li>A mindset of continuous learning and experimentation</li>
+                            <li>Flexibility in adapting to new tools and approaches</li>
+                            <li>Regular engagement with AI developments</li>
+                            <li>Sharing of best practices with colleagues</li>
+                            <li>A learner-centered approach that transcends specific technologies</li>
+                        </ul>
+
+                        <p>Staying informed, maintaining curiosity, and focusing on fundamental principles rather than specific tools will be essential for navigating this evolving landscape effectively.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NLP Tab -->
+        <div id="content-nlp" class="tab-content">
+            <h2>Natural Language Processing: From CLI to GUI to NLI</h2>
+
+            <h3>The Evolution of Human-Computer Interaction</h3>
+            <p>Understanding how we interact with computers has evolved dramatically helps contextualize the revolutionary nature of natural language interfaces powered by generative AI. This evolution represents fundamental shifts in accessibility, usability, and the democratization of technology.</p>
+
+            <div class="visual-diagram">
+                <h3>Three Eras of Computing Interfaces</h3>
+                <div class="evolution-timeline">
+                    <div class="timeline-item">
+                        <h4>CLI</h4>
+                        <p><strong>Command-Line Interface</strong></p>
+                        <p>1960s-1980s</p>
+                        <p>Text commands, precise syntax required</p>
+                    </div>
+                    <span class="timeline-arrow">→</span>
+                    <div class="timeline-item">
+                        <h4>GUI</h4>
+                        <p><strong>Graphical User Interface</strong></p>
+                        <p>1980s-Present</p>
+                        <p>Visual icons, menus, mouse interaction</p>
+                    </div>
+                    <span class="timeline-arrow">→</span>
+                    <div class="timeline-item">
+                        <h4>NLI</h4>
+                        <p><strong>Natural Language Interface</strong></p>
+                        <p>2020s-Present</p>
+                        <p>Conversational, everyday language</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Command-Line Interface (CLI): The Beginning
+                    </button>
+                    <div class="accordion-content">
+                        <p>In the early days of computing, users interacted with computers through Command-Line Interfaces. These text-based interfaces required users to type precise commands in specific syntax. A single typo or incorrect parameter would result in errors. Using computers required extensive technical knowledge and memorization of commands.</p>
+
+                        <div class="example-box">
+                            <strong>CLI Example:</strong><br>
+                            <code>cd /home/user/documents && grep -r "budget" *.txt | sort</code><br><br>
+                            This command changes directory, searches for the word "budget" in all text files, and sorts the results. Understanding it requires knowledge of multiple commands and their syntax.
+                        </div>
+
+                        <h4>Limitations</h4>
+                        <ul>
+                            <li>Steep learning curve requiring technical training</li>
+                            <li>Memorization of commands and syntax</li>
+                            <li>Unforgiving of errors</li>
+                            <li>Limited accessibility for non-technical users</li>
+                            <li>Created significant barriers to technology adoption</li>
+                        </ul>
+
+                        <p>While powerful and efficient for experts, CLIs created a significant barrier to entry. Only those with specialized training could effectively use computers, limiting technology's accessibility and impact.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Graphical User Interface (GUI): The Democratization
+                    </button>
+                    <div class="accordion-content">
+                        <p>The introduction of Graphical User Interfaces in the 1980s revolutionized computing. Instead of memorizing commands, users could click icons, drag files, and interact with visual representations of information. The desktop metaphor made computers intuitive by leveraging familiar real-world concepts like folders, documents, and trash cans.</p>
+
+                        <h4>Impact of GUIs</h4>
+                        <ul>
+                            <li>Dramatically expanded computer accessibility</li>
+                            <li>Enabled the personal computer revolution</li>
+                            <li>Made technology usable without technical training</li>
+                            <li>Widespread adoption in homes, schools, and workplaces</li>
+                            <li>Visual and intuitive interaction paradigm</li>
+                        </ul>
+
+                        <h4>Remaining Limitations</h4>
+                        <p>Despite their advantages, GUIs still have limitations:</p>
+                        <ul>
+                            <li>Users must navigate through menus and learn interface organization</li>
+                            <li>Complex tasks may require multiple steps across different interfaces</li>
+                            <li>Learning curve still exists, though much reduced</li>
+                            <li>Efficiency can be limited by interface design</li>
+                        </ul>
+
+                        <p>The GUI paradigm remains dominant today in most computing devices, but natural language interfaces are beginning to complement and, in some cases, replace traditional graphical interfaces.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Natural Language Interface (NLI): The Current Revolution
+                    </button>
+                    <div class="accordion-content">
+                        <p>Natural Language Interfaces represent the next major evolution in human-computer interaction. Instead of learning commands or navigating menus, users can simply describe what they want in everyday language. Generative AI makes this possible by understanding context, intent, and nuance in human communication.</p>
+
+                        <div class="example-box">
+                            <strong>NLI Example:</strong><br>
+                            "Please search through my documents folder for any files that mention budget information and organize the results by date."<br><br>
+                            This natural language request accomplishes the same goal as the CLI example above, but requires no technical knowledge or specific syntax.
+                        </div>
+
+                        <h4>Key Advantages</h4>
+                        <ul>
+                            <li>Computer adapts to user rather than user adapting to computer</li>
+                            <li>Uses same communication skills as human conversation</li>
+                            <li>Dramatically lowers barriers to entry</li>
+                            <li>No memorization or navigation required</li>
+                            <li>Accessible to people of all technical backgrounds</li>
+                            <li>Natural and intuitive interaction</li>
+                        </ul>
+
+                        <h4>Transformative Impact</h4>
+                        <p>NLIs represent a fundamental shift in accessibility and usability. People can interact with technology using the communication skills they already possess, making advanced computing capabilities available to everyone regardless of technical expertise.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        What is Natural Language Processing?
+                    </button>
+                    <div class="accordion-content">
+                        <p>Natural Language Processing (NLP) is the field of AI focused on enabling computers to understand, interpret, and generate human language. NLP encompasses a wide range of tasks including text analysis, sentiment detection, translation, summarization, and conversation.</p>
+
+                        <h4>Beyond Keyword Matching</h4>
+                        <p>Modern NLP, powered by large language models, goes far beyond simple keyword matching. These systems:</p>
+                        <ul>
+                            <li>Understand context and how it affects meaning</li>
+                            <li>Recognize and resolve ambiguity</li>
+                            <li>Infer intent from implicit cues</li>
+                            <li>Generate coherent, contextually appropriate responses</li>
+                            <li>Handle complexity, variability, and subtlety of natural communication</li>
+                        </ul>
+
+                        <h4>Key NLP Capabilities</h4>
+                        
+                        <p><strong>Understanding Context:</strong> Advanced NLP systems understand that word meaning depends on context. The word "bank" means different things in "river bank" versus "savings bank." Modern language models track context across entire conversations, understanding references to previous statements and maintaining coherent dialogue.</p>
+
+                        <p><strong>Handling Ambiguity:</strong> Human language is inherently ambiguous. The sentence "I saw her duck" could mean observing a bird or watching someone lower their head. NLP systems use surrounding context and learned patterns to resolve such ambiguities, much as humans do.</p>
+
+                        <p><strong>Generating Coherent Text:</strong> Beyond understanding language, modern NLP systems can generate original, coherent text. They maintain consistent tone, follow logical structure, and adapt style to different contexts.</p>
+
+                        <p><strong>Multilingual Understanding:</strong> Advanced language models can work across multiple languages, translating between them and even understanding code-switching (mixing languages within a single conversation).</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Implications for Education and Extension Work
+                    </button>
+                    <div class="accordion-content">
+                        <h4>Accessibility and Inclusion</h4>
+                        <p>Natural language interfaces make technology accessible to people who might struggle with traditional interfaces due to disabilities, limited technical training, or language barriers. Extension workers can leverage NLI tools to serve more diverse audiences effectively.</p>
+
+                        <h4>Efficient Information Access</h4>
+                        <p>Instead of navigating complex databases or websites, users can ask questions in natural language and receive direct answers. This efficiency is particularly valuable for Extension workers who need to access information quickly while working with community members.</p>
+
+                        <h4>Content Creation and Adaptation</h4>
+                        <p>NLP tools can help:</p>
+                        <ul>
+                            <li>Create educational materials tailored to specific audiences</li>
+                            <li>Translate content for different language communities</li>
+                            <li>Summarize complex research for general audiences</li>
+                            <li>Adapt content to different reading levels</li>
+                            <li>Generate multiple versions for different contexts</li>
+                        </ul>
+
+                        <h4>Conversational Learning</h4>
+                        <p>AI tutors and assistants can engage in natural dialogue with learners, answering questions, providing explanations, and offering personalized support. This conversational approach can make learning more engaging and accessible.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Limitations and Considerations
+                    </button>
+                    <div class="accordion-content">
+                        <p>Despite impressive capabilities, NLP systems have important limitations that users must understand:</p>
+
+                        <h4>Key Limitations</h4>
+                        <ul>
+                            <li><strong>Hallucinations:</strong> Can generate plausible-sounding but incorrect information</li>
+                            <li><strong>Specialized Knowledge:</strong> May not understand highly technical or specialized language accurately</li>
+                            <li><strong>Bias:</strong> Can perpetuate biases present in training data</li>
+                            <li><strong>Lack of True Understanding:</strong> Despite appearing conversational, these are sophisticated pattern-matching tools, not truly intelligent entities</li>
+                            <li><strong>Context Limitations:</strong> May lose track of context in very long conversations</li>
+                            <li><strong>Temporal Knowledge:</strong> Training data has cutoff dates, limiting knowledge of recent events</li>
+                        </ul>
+
+                        <h4>Best Practices</h4>
+                        <p>Users must approach NLP tools with appropriate skepticism:</p>
+                        <ul>
+                            <li>Verify important information from authoritative sources</li>
+                            <li>Be aware of potential biases in outputs</li>
+                            <li>Understand limitations in specialized domains</li>
+                            <li>Recognize that these are tools, not infallible experts</li>
+                            <li>Teach critical evaluation of AI-generated content</li>
+                        </ul>
+
+                        <p>In educational contexts, teaching critical evaluation of AI-generated content is essential. Learners must understand both the capabilities and limitations of these powerful tools.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Risks & Concerns Tab -->
+        <div id="content-risks" class="tab-content">
+            <h2>Risks & Concerns</h2>
+
+            <p>While generative AI offers tremendous potential for education and Extension work, it also raises significant concerns that must be addressed thoughtfully. Understanding these risks is essential for responsible adoption and use of AI tools in educational contexts.</p>
+
+            <div class="warning-box">
+                <h3>⚠️ Critical Warning: High-Risk Data</h3>
+                <p><strong>Never enter the following into AI tools:</strong></p>
+                <ul>
+                    <li>Social Security numbers</li>
+                    <li>Credit card information</li>
+                    <li>Protected health information (PHI)</li>
+                    <li>Student education records protected by FERPA</li>
+                    <li>Any regulated or high-risk data</li>
+                </ul>
+                <p><strong>Violating these guidelines can result in serious legal and ethical consequences.</strong></p>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        🔒 Data Privacy and Security
+                    </button>
+                    <div class="accordion-content">
+                        <h4>What Happens to Your Data?</h4>
+                        <p>When you interact with AI systems, you provide data that may be used in various ways. Some AI services use input data to improve their models, meaning your prompts and information could become part of the system's training data. Other services maintain strict data separation, but understanding the specific policies of each tool is crucial.</p>
+
+                        <p>For Extension workers handling sensitive information about community members, agricultural data, or proprietary research, data privacy is particularly critical. Information entered into AI systems could potentially be:</p>
+                        <ul>
+                            <li>Exposed through data breaches</li>
+                            <li>Inadvertently included in responses to other users</li>
+                            <li>Used in ways inconsistent with privacy expectations</li>
+                            <li>Stored indefinitely on company servers</li>
+                            <li>Accessed by company employees or contractors</li>
+                        </ul>
+
+                        <h4>Best Practices for Data Protection</h4>
+                        <ul>
+                            <li>Never enter personally identifiable information (PII) unless using approved tools</li>
+                            <li>Avoid entering protected health information, financial data, or confidential research data</li>
+                            <li>Use anonymized or synthetic data when practicing with AI tools</li>
+                            <li>Review and understand privacy policies and terms of service</li>
+                            <li>For University of Illinois work, consult data classification guidance</li>
+                            <li>Only use approved tools for sensitive data</li>
+                            <li>When in doubt, err on the side of caution</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        🌍 Environmental Impact
+                    </button>
+                    <div class="accordion-content">
+                        <h4>The Hidden Cost of AI</h4>
+                        <p>Training and running large AI models requires enormous computational resources, which translates to significant energy consumption and environmental impact. Training a single large language model can consume as much energy as several American homes use in a year. The data centers that run AI services require constant cooling and power.</p>
+
+                        <h4>Scale of Impact</h4>
+                        <ul>
+                            <li>Training large models: Equivalent to hundreds of thousands of pounds of CO2 emissions</li>
+                            <li>Running inference (generating responses): Ongoing energy consumption</li>
+                            <li>Data center cooling: Significant water and energy use</li>
+                            <li>Hardware manufacturing: Resource extraction and production impacts</li>
+                        </ul>
+
+                        <p>As AI becomes more prevalent, its cumulative environmental impact grows. While individual queries have relatively small impact, the aggregate effect of billions of AI interactions worldwide is substantial.</p>
+
+                        <h4>Responsible Use Considerations</h4>
+                        <ul>
+                            <li>Be intentional about when to use AI versus other tools</li>
+                            <li>Use AI for tasks where it provides significant value</li>
+                            <li>Consider whether traditional search, calculators, or reference materials might suffice</li>
+                            <li>Support development of more energy-efficient AI models</li>
+                            <li>Advocate for transparency about AI's environmental impact</li>
+                            <li>Promote sustainable computing practices</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        🧠 Cognitive and Educational Concerns
+                    </button>
+                    <div class="accordion-content">
+                        <h4>Potential for Cognitive Atrophy</h4>
+                        <p>Over-reliance on AI tools could lead to atrophy of important cognitive skills:</p>
+                        <ul>
+                            <li>If students consistently use AI to write essays, writing skills may not develop</li>
+                            <li>If AI solves all math problems, mathematical reasoning may suffer</li>
+                            <li>If AI provides all answers, critical thinking and research skills may diminish</li>
+                            <li>If AI handles all creative tasks, creative capabilities may atrophy</li>
+                        </ul>
+
+                        <p>This concern parallels historical worries about calculators, spell-checkers, and search engines. The key is thoughtful integration that enhances rather than replaces learning.</p>
+
+                        <h4>Academic Integrity Challenges</h4>
+                        <p>Generative AI makes academic dishonesty easier and harder to detect:</p>
+                        <ul>
+                            <li>Students can generate essays, solve problems, or complete assignments with minimal effort</li>
+                            <li>Traditional plagiarism detection tools are often ineffective against AI-generated content</li>
+                            <li>Distinguishing between appropriate and inappropriate AI use can be challenging</li>
+                            <li>Fundamental assumptions about assessment and learning verification are challenged</li>
+                        </ul>
+
+                        <h4>Addressing the Challenge</h4>
+                        <p>Rather than simply banning AI (which is difficult to enforce), educators must:</p>
+                        <ul>
+                            <li>Redesign assignments to emphasize process over product</li>
+                            <li>Require authentic demonstration of understanding</li>
+                            <li>Incorporate AI literacy and ethical use into curricula</li>
+                            <li>Have honest conversations about appropriate versus inappropriate AI use</li>
+                            <li>Focus on skills that AI cannot easily replicate</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        ⚖️ Equity in Access and Outcomes
+                    </button>
+                    <div class="accordion-content">
+                        <h4>Access Disparities</h4>
+                        <p>Not all students have equal access to AI tools:</p>
+                        <ul>
+                            <li>Some have subscriptions to advanced AI services while others rely on free, limited versions</li>
+                            <li>Some have devices and internet connectivity to use AI effectively while others face technological barriers</li>
+                            <li>This creates potential for widening achievement gaps</li>
+                            <li>Rural and underserved communities may have less access</li>
+                        </ul>
+
+                        <h4>Performance Disparities</h4>
+                        <p>AI systems may perform differently for different groups:</p>
+                        <ul>
+                            <li>Models trained primarily on English text may be less effective for non-native English speakers</li>
+                            <li>AI systems can perpetuate cultural biases or lack understanding of diverse perspectives</li>
+                            <li>Certain dialects or communication styles may be less well understood</li>
+                            <li>Representation in training data affects quality of outputs for different groups</li>
+                        </ul>
+
+                        <h4>Extension Worker Responsibility</h4>
+                        <p>Educators must be aware of these equity implications and work to ensure fair access and outcomes:</p>
+                        <ul>
+                            <li>Advocate for universal access to AI tools</li>
+                            <li>Be mindful of creating assignments that assume AI access</li>
+                            <li>Provide alternative pathways for students without AI access</li>
+                            <li>Teach critical evaluation of AI bias and limitations</li>
+                            <li>Work to ensure AI use doesn't disadvantage underserved communities</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        ❌ Accuracy and Hallucination
+                    </button>
+                    <div class="accordion-content">
+                        <h4>The Problem of AI Hallucinations</h4>
+                        <p>AI systems sometimes generate false information presented with confidence. These "hallucinations" occur because AI models are fundamentally pattern-matching systems that generate plausible-sounding text rather than retrieving verified facts.</p>
+
+                        <p>An AI might:</p>
+                        <ul>
+                            <li>Invent citations to non-existent papers</li>
+                            <li>Create fictional statistics that sound plausible</li>
+                            <li>Confidently state incorrect information</li>
+                            <li>Fabricate details to fill gaps in knowledge</li>
+                            <li>Mix accurate and inaccurate information seamlessly</li>
+                        </ul>
+
+                        <p>This is particularly dangerous in educational contexts where learners may trust AI-generated information without verification.</p>
+
+                        <h4>Verification and Fact-Checking</h4>
+                        <p>Essential practices for responsible AI use:</p>
+                        <ul>
+                            <li>Always verify important facts, statistics, and citations from AI-generated content</li>
+                            <li>Cross-reference AI outputs with authoritative sources</li>
+                            <li>Be especially cautious with specialized, technical, or recent information</li>
+                            <li>Teach learners to approach AI outputs with healthy skepticism</li>
+                            <li>Use AI as a starting point for research, not the final authority</li>
+                            <li>Check original sources for any cited material</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        🎯 AI Alignment and Control
+                    </button>
+                    <div class="accordion-content">
+                        <h4>What is AI Alignment?</h4>
+                        <p>AI alignment refers to ensuring that AI systems behave in accordance with human values and intentions. As AI systems become more powerful, ensuring they act in beneficial ways becomes increasingly important and challenging. Misaligned AI could pursue goals in ways that have unintended negative consequences.</p>
+
+                        <h4>Current Alignment Efforts</h4>
+                        <p>AI developers use several techniques to align models with human preferences:</p>
+                        <ul>
+                            <li>Reinforcement Learning from Human Feedback (RLHF)</li>
+                            <li>Testing for harmful outputs</li>
+                            <li>Refining systems to refuse inappropriate requests</li>
+                            <li>Constitutional AI approaches</li>
+                            <li>Red teaming and adversarial testing</li>
+                        </ul>
+
+                        <p>However, alignment remains an ongoing challenge, and no system is perfect.</p>
+
+                        <h4>Practical Implications</h4>
+                        <p>Even well-aligned AI systems can sometimes produce problematic outputs:</p>
+                        <ul>
+                            <li>Biased statements reflecting training data biases</li>
+                            <li>Inappropriate content that slips through filters</li>
+                            <li>Harmful advice in edge cases</li>
+                            <li>Responses that don't align with specific cultural values</li>
+                        </ul>
+
+                        <p>Users should remain vigilant and report concerning outputs to AI providers. In educational settings, supervision and guidance are important, especially for younger learners.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        ⚠️ Bias and Fairness
+                    </button>
+                    <div class="accordion-content">
+                        <h4>Sources of Bias in AI</h4>
+                        <p>AI systems learn from training data that reflects historical biases and inequities. If training data contains biased patterns, the AI will learn and potentially amplify those biases.</p>
+
+                        <p>This can manifest in various ways:</p>
+                        <ul>
+                            <li>Gender stereotypes in generated content (e.g., assuming doctors are male, nurses female)</li>
+                            <li>Racial bias in language understanding and generation</li>
+                            <li>Cultural assumptions that don't apply universally</li>
+                            <li>Underrepresentation of minority perspectives</li>
+                            <li>Socioeconomic biases in examples and scenarios</li>
+                            <li>Age-related stereotypes</li>
+                        </ul>
+
+                        <h4>Addressing Bias</h4>
+                        <p>Responsible AI use requires active engagement with bias issues:</p>
+                        <ul>
+                            <li>Be aware that AI outputs may contain biased assumptions or perspectives</li>
+                            <li>Critically evaluate AI-generated content for bias and stereotypes</li>
+                            <li>Seek diverse sources and perspectives beyond AI outputs</li>
+                            <li>Teach learners to recognize and question bias in AI systems</li>
+                            <li>Advocate for more diverse and representative training data</li>
+                            <li>Support diverse AI development teams</li>
+                            <li>Report biased outputs to AI providers</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        📢 Misinformation and Manipulation
+                    </button>
+                    <div class="accordion-content">
+                        <h4>AI as a Tool for Misinformation</h4>
+                        <p>Generative AI makes it easier to create convincing misinformation at scale:</p>
+                        <ul>
+                            <li>Fake news articles that appear credible</li>
+                            <li>Deepfake videos and images</li>
+                            <li>Fabricated "research" and citations</li>
+                            <li>Manipulated content for propaganda</li>
+                            <li>Personalized disinformation campaigns</li>
+                        </ul>
+
+                        <p>This poses significant challenges for information literacy and public discourse, particularly in educational and Extension contexts where accurate information is crucial.</p>
+
+                        <h4>Building Resilience</h4>
+                        <p>Extension workers play a crucial role in building community resilience against misinformation:</p>
+                        <ul>
+                            <li>Teach critical evaluation of sources</li>
+                            <li>Promote media literacy and AI literacy</li>
+                            <li>Encourage verification of information before sharing</li>
+                            <li>Model responsible information practices</li>
+                            <li>Help communities understand how AI-generated content works</li>
+                            <li>Provide trusted, accurate information through Extension channels</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top: 30px;">
+                <h3>Balancing Innovation and Caution</h3>
+                <p>These risks and concerns should not prevent the use of AI in education but should inform thoughtful, responsible adoption. The goal is to harness AI's benefits while mitigating its risks through:</p>
+                <ul>
+                    <li>Awareness of limitations and concerns</li>
+                    <li>Appropriate policies and guidelines</li>
+                    <li>Ongoing education and professional development</li>
+                    <li>Critical engagement with AI outputs</li>
+                    <li>Continuous evaluation of practices and outcomes</li>
+                </ul>
+                <p>For Extension workers, this means staying informed, sharing knowledge with colleagues and communities, developing and following responsible use guidelines, and maintaining a balanced perspective that acknowledges both potential and limitations.</p>
+            </div>
+        </div>
+
+        <!-- Campus Tools Tab -->
+        <div id="content-campus" class="tab-content">
+            <h2>Campus Tools</h2>
+
+            <div class="info-box">
+                <p><strong>Important:</strong> The University of Illinois provides several approved generative AI tools vetted for security, privacy, and appropriate data handling. Understanding which tools are available and appropriate for different use cases is essential for responsible AI use in Extension work.</p>
+                <p>For the most up-to-date information, visit <a href="https://genai.illinois.edu/ai-apps/" target="_blank" rel="noopener noreferrer">genai.illinois.edu/ai-apps/</a></p>
+            </div>
+
+            <h3>AI Chat Assistants</h3>
+            <p>These are the primary conversational AI tools available to the campus community. Each has different strengths and is suited to different types of tasks.</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Microsoft Copilot Chat</h3>
+                    <p><strong>Best for:</strong> Quick drafting, summaries, and everyday work in Microsoft tools</p>
+                    <p><strong>Eligibility:</strong> Students, faculty, and staff</p>
+                    <p><strong>Approved Data:</strong></p>
+                    <span class="data-badge badge-sensitive">Sensitive</span>
+                    <span class="data-badge badge-internal">Internal</span>
+                    <span class="data-badge badge-public">Public</span>
+                    <p style="margin-top: 15px;"><strong>Availability:</strong> Included with Microsoft Office</p>
+                    <p style="margin-top: 10px;">Integrated into the Microsoft ecosystem, making it convenient for users who work primarily in Word, Excel, PowerPoint, and other Microsoft applications.</p>
+                </div>
+
+                <div class="card">
+                    <h3>ChatGPT Edu</h3>
+                    <p><strong>Best for:</strong> Deeper writing, research, and complex problem-solving</p>
+                    <p><strong>Eligibility:</strong> Faculty and staff</p>
+                    <p><strong>Approved Data:</strong></p>
+                    <span class="data-badge badge-sensitive">Sensitive</span>
+                    <span class="data-badge badge-internal">Internal</span>
+                    <span class="data-badge badge-public">Public</span>
+                    <p style="margin-top: 15px;"><strong>Availability:</strong> $11 per month on WebStore</p>
+                    <p style="margin-top: 10px;">Provides access to advanced capabilities including GPT-4, extended conversation memory, and sophisticated reasoning. Well-suited for complex writing projects and detailed research assistance.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Google Gemini</h3>
+                    <p><strong>Best for:</strong> Brainstorming, quick content creation, and general Q&A</p>
+                    <p><strong>Eligibility:</strong> Students, faculty, and staff</p>
+                    <p><strong>Approved Data:</strong></p>
+                    <span class="data-badge badge-internal">Internal</span>
+                    <span class="data-badge badge-public">Public</span>
+                    <p style="margin-top: 15px;"><strong>Availability:</strong> Included with Google license</p>
+                    <p style="margin-top: 10px;"><strong>Note:</strong> Gemini is approved for Internal and Public data only, not Sensitive data.</p>
+                </div>
+            </div>
+
+            <h3>Data Classification and AI Use</h3>
+            <p>Only use AI tools with data you're allowed to share. Understanding data classification is crucial for responsible AI use. The University of Illinois uses a four-tier data classification system:</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3>🟢 Public Data</h3>
+                    <p><strong>Generally appropriate for AI</strong></p>
+                    <p>Information intended for public release. No adverse impact if disclosed.</p>
+                    <p><strong>Examples:</strong> Published research, public websites, marketing materials</p>
+                    <p><strong>AI Use:</strong> Can be used with any AI tool</p>
+                </div>
+
+                <div class="card">
+                    <h3>🟡 Internal Data</h3>
+                    <p><strong>Use with caution</strong></p>
+                    <p>Non-public university data intended for internal use. Potential operational impact if disclosed.</p>
+                    <p><strong>Examples:</strong> Internal memos, draft documents, non-sensitive student information</p>
+                    <p><strong>AI Use:</strong> Use only with approved tools and consider whether AI use is necessary</p>
+                </div>
+
+                <div class="card">
+                    <h3>🟠 Sensitive Data</h3>
+                    <p><strong>Approved tools only</strong></p>
+                    <p>Role-restricted or sensitive university data. Serious privacy or operational risk if improperly shared.</p>
+                    <p><strong>Examples:</strong> Personnel records, student grades, research data with confidentiality agreements</p>
+                    <p><strong>AI Use:</strong> Only use with AI tools explicitly approved for Sensitive data</p>
+                </div>
+
+                <div class="card">
+                    <h3>🔴 High-Risk Data</h3>
+                    <p><strong>Do NOT use with AI</strong></p>
+                    <p>Regulated or high-risk data including SSNs, credit card information, protected health information (PHI), and other legally protected data.</p>
+                    <p><strong>Examples:</strong> Social Security numbers, credit cards, PHI, FERPA-protected records</p>
+                    <p><strong>AI Use:</strong> <strong>Never enter this data into any AI tool</strong></p>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <h4>When in Doubt</h4>
+                <p>If you're unsure about whether data is appropriate for AI use, err on the side of caution. Consult the <a href="https://genai.illinois.edu/ai-apps/" target="_blank" rel="noopener noreferrer">Illinois data classification guidance</a> or contact <a href="mailto:securitysupport@illinois.edu">securitysupport@illinois.edu</a> for guidance.</p>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Chat, Writing, and Analysis Tools
+                    </button>
+                    <div class="accordion-content">
+                        <p>These tools help with everyday work like drafting emails, summarizing documents, brainstorming ideas, and doing light research.</p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>App Name</th>
+                                    <th>Best For</th>
+                                    <th>Eligibility</th>
+                                    <th>Approved Data</th>
+                                    <th>Availability</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ChatGPT Edu</td>
+                                    <td>Advanced writing, research, admin tasks</td>
+                                    <td>Faculty & staff</td>
+                                    <td>Sensitive, Internal, Public</td>
+                                    <td>$11/month on WebStore</td>
+                                </tr>
+                                <tr>
+                                    <td>Illinois Chat</td>
+                                    <td>Customized chatbot development</td>
+                                    <td>Students, faculty & staff</td>
+                                    <td>Sensitive*, Internal, Public (*Model Dependent)</td>
+                                    <td>No cost (supported by Illinois Computes, NCSA, Office of the CIO)</td>
+                                </tr>
+                                <tr>
+                                    <td>Microsoft Copilot Chat</td>
+                                    <td>Drafting, summaries, general AI chat</td>
+                                    <td>Students, faculty & staff</td>
+                                    <td>Sensitive, Internal, Public</td>
+                                    <td>Included in Microsoft Office</td>
+                                </tr>
+                                <tr>
+                                    <td>Google Gemini</td>
+                                    <td>General AI reasoning and content creation</td>
+                                    <td>Students, faculty & staff</td>
+                                    <td>Internal, Public</td>
+                                    <td>Included with Google license</td>
+                                </tr>
+                                <tr>
+                                    <td>Google NotebookLM</td>
+                                    <td>Document-based research and synthesis</td>
+                                    <td>Students, faculty & staff</td>
+                                    <td>Internal, Public</td>
+                                    <td>Included with Google license</td>
+                                </tr>
+                                <tr>
+                                    <td>Zoom AI Companion</td>
+                                    <td>General AI reasoning and content creation</td>
+                                    <td>Students, faculty & staff</td>
+                                    <td>Sensitive, Internal, Public</td>
+                                    <td>Included with Zoom</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Meeting and Collaboration Tools
+                    </button>
+                    <div class="accordion-content">
+                        <p>These tools support meetings by generating summaries, transcripts, and action items. They're best used to save time after meetings, not to replace judgment or decision-making. Be especially mindful of what gets recorded or summarized and avoid using these tools for sensitive conversations.</p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>App Name</th>
+                                    <th>Best For</th>
+                                    <th>Eligibility</th>
+                                    <th>Approved Data</th>
+                                    <th>Availability</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Microsoft Teams Premium</td>
+                                    <td>AI meeting tools and intelligent recap</td>
+                                    <td>Faculty & staff</td>
+                                    <td>Sensitive, Internal, Public</td>
+                                    <td>$2/month on WebStore</td>
+                                </tr>
+                                <tr>
+                                    <td>Zoom AI Companion</td>
+                                    <td>AI meeting summaries and transcripts</td>
+                                    <td>Students, faculty & staff</td>
+                                    <td>Sensitive, Internal, Public</td>
+                                    <td>Included with Zoom</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Advanced Tools
+                    </button>
+                    <div class="accordion-content">
+                        <p>These tools are designed for more specialized work like software development or deep integration with productivity platforms.</p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>App Name</th>
+                                    <th>Best For</th>
+                                    <th>Eligibility</th>
+                                    <th>Approved Data</th>
+                                    <th>Availability</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Microsoft 365 Copilot Add-On</td>
+                                    <td>AI across Outlook, Word, Teams, and OneDrive</td>
+                                    <td>Faculty & staff</td>
+                                    <td>Sensitive, Internal, Public</td>
+                                    <td>$28/month on WebStore</td>
+                                </tr>
+                                <tr>
+                                    <td>GitHub Copilot</td>
+                                    <td>Code completion and developer productivity</td>
+                                    <td>Faculty & staff</td>
+                                    <td>Sensitive, Internal, Public</td>
+                                    <td>Review Security and Privacy Resources before use</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Choosing the Right Tool
+                    </button>
+                    <div class="accordion-content">
+                        <p>Selecting the appropriate AI tool depends on several factors:</p>
+
+                        <h4>Task Complexity</h4>
+                        <p>Simple tasks may be handled by free, included tools, while complex projects might benefit from premium options like ChatGPT Edu.</p>
+
+                        <h4>Data Sensitivity</h4>
+                        <p>Always check the approved data classifications for each tool and ensure your data fits within those parameters. This is the most critical consideration.</p>
+
+                        <h4>Integration Needs</h4>
+                        <p>If you work primarily in Microsoft or Google ecosystems, tools integrated with those platforms may be most convenient.</p>
+
+                        <h4>Cost Considerations</h4>
+                        <p>Some tools are included with existing licenses while others require additional subscriptions. Consider whether the additional capabilities justify the cost.</p>
+
+                        <h4>Specific Features</h4>
+                        <p>Different tools have different strengths. Consider whether you need document analysis, code generation, meeting summaries, or other specialized capabilities.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Getting Support
+                    </button>
+                    <div class="accordion-content">
+                        <p>For questions about campus AI tools, data classification, or appropriate use:</p>
+                        <ul>
+                            <li>Visit <a href="https://genai.illinois.edu/" target="_blank" rel="noopener noreferrer">genai.illinois.edu</a> for comprehensive resources</li>
+                            <li>Email <a href="mailto:genai-support@illinois.edu">genai-support@illinois.edu</a> for technical support</li>
+                            <li>Contact <a href="mailto:securitysupport@illinois.edu">securitysupport@illinois.edu</a> for data security questions</li>
+                            <li>Reach out to the Center for Innovation in Teaching & Learning for pedagogical guidance</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prompting Tab -->
+        <div id="content-prompting" class="tab-content">
+            <h2>Prompting: Communicating Effectively with AI</h2>
+
+            <h3>What is Prompting?</h3>
+            <p>Prompting is the art and science of communicating your intentions to AI systems effectively. A prompt is the input you provide to an AI—typically text, but sometimes including images or other data—that instructs the AI about what you want it to do. The quality of your prompts significantly impacts the quality of AI outputs.</p>
+
+            <p>Unlike traditional software with buttons and menus, generative AI requires you to describe what you want in natural language. This flexibility is powerful but requires developing new skills. Effective prompting is becoming an essential literacy in the age of AI.</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Be Clear & Specific</h3>
+                    <p>Vague prompts produce vague results.</p>
+                    <div class="example-box">
+                        <strong>❌ Vague:</strong> "Tell me about education"<br><br>
+                        <strong>✅ Specific:</strong> "Explain three evidence-based strategies for improving student engagement in online learning environments"
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Provide Context</h3>
+                    <p>AI systems work better when they understand the context of your request.</p>
+                    <div class="example-box">
+                        <strong>Example:</strong> "I'm an Extension educator preparing a workshop for farmers. Explain precision agriculture in terms accessible to farmers with varying technical experience."
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Specify Format & Style</h3>
+                    <p>Tell the AI how you want the information presented.</p>
+                    <ul>
+                        <li>Bulleted list vs. essay</li>
+                        <li>Table vs. narrative</li>
+                        <li>Formal vs. conversational tone</li>
+                        <li>Length requirements</li>
+                        <li>Reading level</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Use Examples</h3>
+                    <p>Providing examples (few-shot prompting) helps AI understand your expectations.</p>
+                    <div class="example-box">
+                        <strong>Example:</strong> "Write three workshop titles in this style: 'From Soil to Success: Building Healthy Farm Ecosystems'"
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        The CRAFT Framework
+                    </button>
+                    <div class="accordion-content">
+                        <p>A useful structure for comprehensive prompts includes these elements:</p>
+
+                        <h4>C - Context</h4>
+                        <p>Background information and situation. What is the setting or circumstances?</p>
+                        <p><strong>Example:</strong> "I'm developing a workshop on water conservation for homeowners."</p>
+
+                        <h4>R - Role</h4>
+                        <p>Who the AI should act as. This helps set the appropriate perspective and expertise level.</p>
+                        <p><strong>Example:</strong> "You are an environmental educator with expertise in residential water use."</p>
+
+                        <h4>A - Action</h4>
+                        <p>What you want the AI to do. Be specific about the task.</p>
+                        <p><strong>Example:</strong> "Create a list of practical water conservation strategies."</p>
+
+                        <h4>F - Format</h4>
+                        <p>How you want the output structured. Specify organization and presentation.</p>
+                        <p><strong>Example:</strong> "Present as a numbered list with brief explanations for each strategy."</p>
+
+                        <h4>T - Target</h4>
+                        <p>Who the output is for (audience). This helps tailor language and complexity.</p>
+                        <p><strong>Example:</strong> "Homeowners with varying levels of environmental knowledge."</p>
+
+                        <div class="info-box" style="margin-top: 20px;">
+                            <h4>Complete CRAFT Example</h4>
+                            <p>"<strong>Context:</strong> I'm developing a workshop on water conservation for homeowners. <strong>Role:</strong> You are an environmental educator with expertise in residential water use. <strong>Action:</strong> Create a list of practical water conservation strategies. <strong>Format:</strong> Present as a numbered list with brief explanations for each strategy. <strong>Target:</strong> Homeowners with varying levels of environmental knowledge."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Advanced Prompting Techniques
+                    </button>
+                    <div class="accordion-content">
+                        <h4>Iterative Refinement</h4>
+                        <p>Rarely will your first prompt produce perfect results. Treat prompting as an iterative conversation. Review the output, identify what works and what doesn't, and refine your prompt accordingly.</p>
+                        <p><strong>Examples of refinement prompts:</strong></p>
+                        <ul>
+                            <li>"This is good, but make the language more accessible for non-experts"</li>
+                            <li>"Add more specific examples from agricultural contexts"</li>
+                            <li>"Expand on the second point with more detail"</li>
+                            <li>"Make this more concise, focusing on the key takeaways"</li>
+                        </ul>
+
+                        <h4>Chain-of-Thought Approach</h4>
+                        <p>For complex reasoning tasks, asking the AI to "think step by step" or "show your reasoning" can improve accuracy. This encourages the AI to break down problems logically rather than jumping to conclusions.</p>
+                        <div class="example-box">
+                            <strong>Example:</strong> "Calculate the cost-effectiveness of installing solar panels on a 2,000 square foot home in Illinois. Think through this step by step, considering installation costs, energy savings, available incentives, and payback period."
+                        </div>
+
+                        <h4>Role-Playing</h4>
+                        <p>Asking the AI to adopt a specific role or perspective can improve relevance and quality.</p>
+                        <ul>
+                            <li>"You are an experienced 4-H educator"</li>
+                            <li>"You are a farmer with 30 years of experience in sustainable agriculture"</li>
+                            <li>"You are a science communicator explaining concepts to general audiences"</li>
+                        </ul>
+
+                        <h4>Constraints and Parameters</h4>
+                        <p>Specifying constraints helps focus the AI's output:</p>
+                        <ul>
+                            <li>Length limits: "in approximately 200 words"</li>
+                            <li>Reading level: "at an 8th-grade reading level"</li>
+                            <li>Tone: "professional but approachable"</li>
+                            <li>Specific requirements: "include at least three peer-reviewed sources"</li>
+                        </ul>
+
+                        <h4>Negative Prompting</h4>
+                        <p>Sometimes it's helpful to specify what you don't want:</p>
+                        <ul>
+                            <li>"Explain climate change without using technical jargon"</li>
+                            <li>"Provide gardening advice that doesn't require expensive equipment"</li>
+                            <li>"Suggest activities that don't need internet access"</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Prompting for Different Tasks
+                    </button>
+                    <div class="accordion-content">
+                        <h4>Information Gathering and Research</h4>
+                        <p>When using AI for research, be specific about what information you need and always verify important facts.</p>
+                        <div class="example-box">
+                            <strong>Example:</strong> "What are the current best practices for integrated pest management in organic vegetable production? Focus on methods suitable for small-scale farms in the Midwest. Provide specific examples and, if possible, cite research sources."
+                        </div>
+
+                        <h4>Content Creation and Writing</h4>
+                        <p>For writing tasks, specify audience, purpose, tone, and format.</p>
+                        <div class="example-box">
+                            <strong>Example:</strong> "Write an engaging introduction for a blog post about native plant gardening. The audience is suburban homeowners interested in supporting pollinators. Tone should be encouraging and accessible. Length: 150-200 words."
+                        </div>
+
+                        <h4>Brainstorming and Ideation</h4>
+                        <p>AI can be excellent for generating ideas. Encourage quantity and variety.</p>
+                        <div class="example-box">
+                            <strong>Example:</strong> "Generate 15 creative workshop topics related to sustainable living for suburban families. Include a mix of indoor and outdoor activities, varying difficulty levels, and different seasons."
+                        </div>
+
+                        <h4>Analysis and Synthesis</h4>
+                        <p>AI can help analyze information and identify patterns.</p>
+                        <div class="example-box">
+                            <strong>Example:</strong> "I'm going to share feedback from 20 workshop participants. Identify the three most common themes in their comments and suggest improvements based on this feedback."
+                        </div>
+
+                        <h4>Simplification and Translation</h4>
+                        <p>AI can adapt content for different audiences.</p>
+                        <div class="example-box">
+                            <strong>Example:</strong> "Rewrite this technical explanation of soil pH for an audience of beginning gardeners. Use analogies and everyday language while maintaining accuracy."
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Common Prompting Mistakes
+                    </button>
+                    <div class="accordion-content">
+                        <h4>Being Too Vague</h4>
+                        <p>"Tell me about plants" could mean anything. "Explain the process of photosynthesis for high school students" is much more useful.</p>
+
+                        <h4>Assuming Too Much Knowledge</h4>
+                        <p>Don't assume the AI knows your specific context. Provide necessary background information about your situation, audience, and goals.</p>
+
+                        <h4>Accepting First Results</h4>
+                        <p>The first output is rarely perfect. Engage in dialogue, refine, and iterate. Think of prompting as a conversation, not a one-shot query.</p>
+
+                        <h4>Not Verifying Information</h4>
+                        <p>AI can generate plausible-sounding but incorrect information. Always verify important facts, statistics, and citations against authoritative sources.</p>
+
+                        <h4>Overcomplicating Prompts</h4>
+                        <p>While detail is good, overly complex prompts can confuse the AI. Start simple and add complexity as needed.</p>
+
+                        <h4>Ignoring Context Windows</h4>
+                        <p>Very long conversations can cause the AI to lose track of earlier context. For complex projects, consider starting fresh or summarizing key points periodically.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Ethical Prompting Considerations
+                    </button>
+                    <div class="accordion-content">
+                        <h4>Transparency</h4>
+                        <p>When using AI-generated content in professional contexts, consider disclosing AI's role. This is particularly important in educational materials and published work. Transparency models responsible use and helps build AI literacy.</p>
+
+                        <h4>Bias Awareness</h4>
+                        <p>Be aware that AI outputs may reflect biases. Critically evaluate responses and consider diverse perspectives beyond what the AI generates. Don't rely solely on AI for information about sensitive topics or diverse communities.</p>
+
+                        <h4>Appropriate Use</h4>
+                        <p>Use AI to enhance your work, not replace critical thinking and expertise. AI should support your professional judgment, not substitute for it. Your knowledge of local contexts, relationships, and specific needs remains irreplaceable.</p>
+
+                        <h4>Data Privacy</h4>
+                        <p>Never include sensitive, confidential, or personally identifiable information in prompts unless using approved tools for that data classification.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Practice and Skill Development
+                    </button>
+                    <div class="accordion-content">
+                        <p>Effective prompting is a skill that improves with practice. Here are ways to develop your prompting abilities:</p>
+
+                        <h4>Experiment Regularly</h4>
+                        <ul>
+                            <li>Try different approaches to the same task</li>
+                            <li>Compare results from different prompting strategies</li>
+                            <li>Learn from what works and what doesn't</li>
+                        </ul>
+
+                        <h4>Build a Prompt Library</h4>
+                        <ul>
+                            <li>Save prompts that produce good results</li>
+                            <li>Create templates for common tasks</li>
+                            <li>Organize by task type or subject area</li>
+                            <li>Share successful prompts with colleagues</li>
+                        </ul>
+
+                        <h4>Learn from Others</h4>
+                        <ul>
+                            <li>Explore prompt libraries and communities online</li>
+                            <li>Ask colleagues about their effective prompts</li>
+                            <li>Attend workshops on prompt engineering</li>
+                        </ul>
+
+                        <h4>Stay Curious</h4>
+                        <ul>
+                            <li>Keep up with new prompting techniques</li>
+                            <li>Experiment with new AI capabilities as they emerge</li>
+                            <li>Reflect on your prompting practice and how it evolves</li>
+                        </ul>
+
+                        <p>For Extension workers, developing strong prompting skills can significantly enhance productivity, improve educational materials, support community engagement, and enable more effective use of AI tools in service of Extension's mission.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Practical Tips Tab -->
+        <div id="content-tips" class="tab-content">
+            <h2>Practical Tips for Using AI in Extension Work</h2>
+
+            <p>This section provides concrete, actionable guidance for integrating generative AI into your Extension work effectively and responsibly. These tips are based on best practices from educators and Extension professionals who are successfully using AI tools.</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3>🚀 Getting Started</h3>
+                    <ul>
+                        <li>Start small with low-stakes tasks</li>
+                        <li>Try drafting emails or brainstorming topics</li>
+                        <li>Gradually expand to complex applications</li>
+                        <li>Choose the right tool for each task</li>
+                        <li>Keep a library of successful prompts</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>📝 Content Creation</h3>
+                    <ul>
+                        <li>Draft workshop outlines and materials</li>
+                        <li>Adapt content for different audiences</li>
+                        <li>Generate examples and scenarios</li>
+                        <li>Create discussion questions</li>
+                        <li>Always personalize with your expertise</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>🔍 Research & Information</h3>
+                    <ul>
+                        <li>Summarize research articles</li>
+                        <li>Identify themes across sources</li>
+                        <li>Explore unfamiliar topics quickly</li>
+                        <li>Always verify citations and facts</li>
+                        <li>Use as starting point, not final authority</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>💬 Communication</h3>
+                    <ul>
+                        <li>Draft professional emails</li>
+                        <li>Create newsletter content</li>
+                        <li>Translate complex information</li>
+                        <li>Respond to common questions</li>
+                        <li>Maintain your authentic voice</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Content Creation and Educational Materials
+                    </button>
+                    <div class="accordion-content">
+                        <h4>Drafting Workshop Materials</h4>
+                        <p>Use AI to create first drafts of workshop outlines, handouts, and presentations. Provide context about your audience, learning objectives, and time constraints. Always review and personalize AI-generated content with your expertise and local knowledge.</p>
+
+                        <div class="example-box">
+                            <strong>Example Prompt:</strong> "Create a 90-minute workshop outline on composting for suburban homeowners. Include learning objectives, activities, discussion questions, and take-home resources. The audience has minimal prior knowledge of composting."
+                        </div>
+
+                        <h4>Adapting Content for Different Audiences</h4>
+                        <p>AI excels at adapting existing content for different reading levels, cultural contexts, or formats. You might ask AI to:</p>
+                        <ul>
+                            <li>Simplify technical research for general audiences</li>
+                            <li>Translate concepts for non-native English speakers</li>
+                            <li>Convert a written guide into a presentation format</li>
+                            <li>Adapt materials for different age groups</li>
+                            <li>Create versions for different literacy levels</li>
+                        </ul>
+
+                        <h4>Generating Examples and Scenarios</h4>
+                        <p>AI can quickly generate realistic examples, case studies, or scenarios for educational purposes. This is particularly useful when you need diverse examples or want to illustrate concepts in multiple contexts.</p>
+
+                        <h4>Creating Discussion Questions</h4>
+                        <p>Ask AI to generate thought-provoking discussion questions based on your content. Specify the level of complexity and the type of thinking you want to encourage (analysis, application, evaluation, etc.).</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Research and Information Gathering
+                    </button>
+                    <div class="accordion-content">
+                        <h4>Literature Reviews and Summarization</h4>
+                        <p>AI can help summarize research articles, identify key themes across multiple sources, and synthesize information. However, always verify citations and check original sources for important claims. AI-generated citations are often inaccurate or fabricated.</p>
+
+                        <h4>Staying Current</h4>
+                        <p>Use AI to help digest new research in your field. You might paste abstracts and ask for summaries, key findings, and implications for Extension work. Remember that AI's training data has a cutoff date, so it may not have information about very recent developments.</p>
+
+                        <h4>Exploring Unfamiliar Topics</h4>
+                        <p>When you need to quickly understand a topic outside your expertise, AI can provide accessible overviews. Use this as a starting point, then consult authoritative sources for deeper understanding and verification.</p>
+
+                        <h4>Best Practices</h4>
+                        <ul>
+                            <li>Always verify facts and statistics from authoritative sources</li>
+                            <li>Check original sources for any cited material</li>
+                            <li>Be skeptical of specific claims without verification</li>
+                            <li>Use AI to identify relevant sources, then read them yourself</li>
+                            <li>Cross-reference information across multiple sources</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Communication and Outreach
+                    </button>
+                    <div class="accordion-content">
+                        <h4>Email and Newsletter Writing</h4>
+                        <p>AI can help draft professional emails, create newsletter content, and craft social media posts. Provide context about your audience and purpose, then personalize the output with your voice and specific details.</p>
+
+                        <h4>Translating Complex Information</h4>
+                        <p>Use AI to make technical or scientific information accessible to general audiences. Ask it to explain concepts using analogies, everyday language, and concrete examples.</p>
+
+                        <div class="example-box">
+                            <strong>Example:</strong> "Explain integrated pest management in simple terms for homeowners who want to reduce pesticide use in their gardens. Use everyday language and practical examples."
+                        </div>
+
+                        <h4>Responding to Common Questions</h4>
+                        <p>Create template responses to frequently asked questions with AI's help. You can then customize these templates for individual situations, saving time while maintaining personal touch.</p>
+
+                        <h4>Social Media Content</h4>
+                        <p>AI can help generate engaging social media posts, suggest hashtags, and adapt content for different platforms. Always review for appropriateness and add your authentic voice.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Program Planning and Administration
+                    </button>
+                    <div class="accordion-content">
+                        <h4>Needs Assessment and Survey Design</h4>
+                        <p>AI can help generate survey questions, design needs assessment tools, and analyze open-ended survey responses for themes and patterns.</p>
+
+                        <h4>Grant Writing Support</h4>
+                        <p>Use AI to help draft grant proposals, develop project timelines, or brainstorm evaluation strategies. Always ensure the final proposal reflects your authentic voice and accurate information about your work.</p>
+
+                        <h4>Data Analysis and Reporting</h4>
+                        <p>AI can help interpret data, identify trends, and suggest ways to visualize findings. It can also assist in writing reports by helping structure information and generate clear explanations of results.</p>
+
+                        <h4>Project Management</h4>
+                        <ul>
+                            <li>Create project timelines and milestones</li>
+                            <li>Generate task lists and workflows</li>
+                            <li>Draft meeting agendas</li>
+                            <li>Summarize meeting notes and action items</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Quality Control and Best Practices
+                    </button>
+                    <div class="accordion-content">
+                        <h4>Always Review and Edit</h4>
+                        <p>Never use AI-generated content without careful review. Check for:</p>
+                        <ul>
+                            <li>Accuracy of facts and claims</li>
+                            <li>Appropriateness for your audience</li>
+                            <li>Tone and voice alignment</li>
+                            <li>Relevance to your specific context</li>
+                            <li>Completeness of information</li>
+                        </ul>
+
+                        <h4>Verify Facts and Citations</h4>
+                        <p>AI can generate plausible-sounding but incorrect information. Always verify:</p>
+                        <ul>
+                            <li>Important facts and statistics</li>
+                            <li>Citations and references</li>
+                            <li>Technical or specialized information</li>
+                            <li>Recent developments or current events</li>
+                        </ul>
+
+                        <h4>Maintain Your Voice</h4>
+                        <p>AI-generated content can sound generic. Edit to ensure materials reflect your authentic voice and the personal touch that makes Extension work effective. Add:</p>
+                        <ul>
+                            <li>Local context and examples</li>
+                            <li>Your personal expertise and experience</li>
+                            <li>Specific details relevant to your community</li>
+                            <li>Your unique perspective and insights</li>
+                        </ul>
+
+                        <h4>Consider Accessibility</h4>
+                        <p>When using AI to create materials, ensure outputs meet accessibility standards:</p>
+                        <ul>
+                            <li>Clear, straightforward language</li>
+                            <li>Logical structure and organization</li>
+                            <li>Proper heading hierarchy</li>
+                            <li>Alt text for images (if applicable)</li>
+                            <li>Compatibility with screen readers</li>
+                        </ul>
+
+                        <h4>Protect Sensitive Information</h4>
+                        <p>Never input personally identifiable information, confidential data, or high-risk information into AI tools. Review data classification guidelines before using AI with any university or community data.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Troubleshooting Common Issues
+                    </button>
+                    <div class="accordion-content">
+                        <h4>When AI Doesn't Understand</h4>
+                        <p>If outputs are off-target:</p>
+                        <ul>
+                            <li>Provide more context and background</li>
+                            <li>Be more specific about what you want</li>
+                            <li>Break complex requests into smaller steps</li>
+                            <li>Try rephrasing your prompt</li>
+                            <li>Give examples of what you're looking for</li>
+                        </ul>
+
+                        <h4>When Outputs Are Too Generic</h4>
+                        <p>To get more specific, relevant results:</p>
+                        <ul>
+                            <li>Add specific details about your context</li>
+                            <li>Provide examples of the style or tone you want</li>
+                            <li>Specify what makes your situation unique</li>
+                            <li>Ask for multiple options and combine the best elements</li>
+                            <li>Iterate and refine based on initial outputs</li>
+                        </ul>
+
+                        <h4>When You're Not Sure What to Ask</h4>
+                        <p>Strategies for unclear situations:</p>
+                        <ul>
+                            <li>Start with a broad question and refine based on the response</li>
+                            <li>Ask AI to suggest questions you might ask about a topic</li>
+                            <li>Describe your goal and ask AI to help you formulate an effective prompt</li>
+                            <li>Break your larger goal into smaller, manageable questions</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Ethical Considerations in Practice
+                    </button>
+                    <div class="accordion-content">
+                        <h4>Be Transparent</h4>
+                        <p>When appropriate, acknowledge AI's role in creating materials. This models responsible use and helps build AI literacy in your communities. Consider adding notes like "Developed with AI assistance" when relevant.</p>
+
+                        <h4>Maintain Professional Judgment</h4>
+                        <p>Use AI to support, not replace, your professional expertise. Your knowledge of:</p>
+                        <ul>
+                            <li>Local contexts and conditions</li>
+                            <li>Relationships with community members</li>
+                            <li>Understanding of specific needs</li>
+                            <li>Professional experience and judgment</li>
+                        </ul>
+                        <p>...remains irreplaceable and essential to effective Extension work.</p>
+
+                        <h4>Consider Equity</h4>
+                        <p>Be mindful that not everyone has equal access to AI tools. Ensure that your use of AI doesn't inadvertently create barriers or disadvantages for community members with limited technology access.</p>
+
+                        <h4>Model Critical Thinking</h4>
+                        <p>When working with learners, demonstrate critical evaluation of AI outputs. This teaches important skills and helps build healthy skepticism about technology.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Continuous Improvement
+                    </button>
+                    <div class="accordion-content">
+                        <h4>Stay Informed</h4>
+                        <p>AI technology evolves rapidly. Stay current by:</p>
+                        <ul>
+                            <li>Following updates from campus resources</li>
+                            <li>Attending professional development opportunities</li>
+                            <li>Staying curious about new capabilities and tools</li>
+                            <li>Reading about AI developments in education</li>
+                        </ul>
+
+                        <h4>Experiment Regularly</h4>
+                        <p>Set aside time to explore new AI applications:</p>
+                        <ul>
+                            <li>Try using AI for tasks you haven't attempted before</li>
+                            <li>Experiment with different prompting approaches</li>
+                            <li>Test new features as they become available</li>
+                            <li>Share discoveries with colleagues</li>
+                        </ul>
+
+                        <h4>Reflect and Adjust</h4>
+                        <p>Periodically assess how AI is impacting your work:</p>
+                        <ul>
+                            <li>What's working well?</li>
+                            <li>What isn't meeting expectations?</li>
+                            <li>How can you refine your approach?</li>
+                            <li>What new applications might be valuable?</li>
+                        </ul>
+                        <p>Continuous reflection leads to more effective use over time.</p>
+
+                        <h4>Build Community</h4>
+                        <p>Connect with colleagues who are also exploring AI:</p>
+                        <ul>
+                            <li>Share successful prompts and strategies</li>
+                            <li>Discuss challenges and solutions</li>
+                            <li>Learn from each other's experiences</li>
+                            <li>Build a community of practice around AI use</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Learn More Tab -->
+        <div id="content-learn" class="tab-content">
+            <h2>Learn More</h2>
+
+            <p>Generative AI is a rapidly evolving field. Continuous learning is essential for staying informed and using these tools effectively and responsibly. This section provides resources for deepening your understanding and keeping current with developments.</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3>🌐 Enterprise GenAI</h3>
+                    <p><a href="https://genai.illinois.edu/" target="_blank" rel="noopener noreferrer">genai.illinois.edu</a></p>
+                    <p>Official campus resource for AI tools, best practices, data classification, updates, and security resources.</p>
+                </div>
+
+                <div class="card">
+                    <h3>🎓 CITL</h3>
+                    <p>Center for Innovation in Teaching & Learning</p>
+                    <p>Workshops, consultations, and resources for AI in teaching and learning contexts. Contact CITL for pedagogical guidance.</p>
+                </div>
+
+                <div class="card">
+                    <h3>💻 Office of the CIO</h3>
+                    <p>Email: <a href="mailto:genai-support@illinois.edu">genai-support@illinois.edu</a></p>
+                    <p>Technical questions, data security concerns, and information about approved tools.</p>
+                </div>
+
+                <div class="card">
+                    <h3>♿ Digital Accessibility</h3>
+                    <p>Guidance on ensuring AI-generated content meets accessibility standards and serves all learners effectively.</p>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Key Concepts to Explore Further
+                    </button>
+                    <div class="accordion-content">
+                        <h4>AI Literacy</h4>
+                        <p>Understanding how AI systems work, their capabilities and limitations, and how to use them effectively and ethically. This is becoming a fundamental literacy alongside reading, writing, and digital literacy.</p>
+
+                        <h4>Prompt Engineering</h4>
+                        <p>The practice of crafting effective prompts to get desired outputs from AI systems. This emerging discipline combines communication skills, understanding of AI capabilities, and iterative refinement.</p>
+
+                        <h4>AI Ethics and Responsible Use</h4>
+                        <p>Understanding ethical implications of AI including bias, fairness, transparency, accountability, privacy, and environmental impact. Essential for responsible adoption in educational contexts.</p>
+
+                        <h4>AI in Education Research</h4>
+                        <p>Scholarly research on how AI impacts learning, teaching effectiveness, assessment practices, and educational equity. This field is rapidly growing with new findings emerging regularly.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Recommended Reading and Resources
+                    </button>
+                    <div class="accordion-content">
+                        <h4>Books</h4>
+                        <ul>
+                            <li><em>The AI Classroom</em> by Dan Fitzpatrick - Practical guidance for educators integrating AI</li>
+                            <li><em>Co-Intelligence: Living and Working with AI</em> by Ethan Mollick - Understanding AI as a collaborative tool</li>
+                            <li><em>AI and the Future of Education</em> by Wayne Holmes - Research-based perspectives on AI's educational impact</li>
+                            <li><em>Atlas of AI</em> by Kate Crawford - Critical examination of AI's social and environmental implications</li>
+                        </ul>
+
+                        <h4>Online Publications and Blogs</h4>
+                        <ul>
+                            <li><strong>One Useful Thing</strong> (Ethan Mollick's blog) - Practical insights on AI in education and work</li>
+                            <li><strong>EDUCAUSE Review</strong> - Articles on technology in higher education, including AI</li>
+                            <li><strong>Inside Higher Ed</strong> - News and analysis on AI in higher education</li>
+                            <li><strong>AI & Society</strong> (journal) - Academic research on social implications of AI</li>
+                        </ul>
+
+                        <h4>Podcasts</h4>
+                        <ul>
+                            <li><strong>AI in Education</strong> - Focused on educational applications and implications</li>
+                            <li><strong>The AI Podcast</strong> - Broader AI topics with educational relevance</li>
+                            <li><strong>Teaching in Higher Ed</strong> - Often covers AI and educational technology</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Professional Development Opportunities
+                    </button>
+                    <div class="accordion-content">
+                        <h4>Campus Workshops and Training</h4>
+                        <p>The university regularly offers workshops on AI tools, prompting techniques, ethical considerations, and pedagogical applications. Check with CITL and your unit's professional development offerings for upcoming opportunities.</p>
+
+                        <h4>Extension-Specific Training</h4>
+                        <p>Extension may offer specialized training on using AI for outreach, program development, and community engagement. Connect with Extension leadership about professional development opportunities.</p>
+
+                        <h4>Online Courses and Certifications</h4>
+                        <p>Numerous platforms offer courses on AI literacy, prompt engineering, and AI in education:</p>
+                        <ul>
+                            <li>Coursera - AI courses from leading universities</li>
+                            <li>edX - Professional certificates in AI</li>
+                            <li>LinkedIn Learning - Practical AI skills</li>
+                            <li>DeepLearning.AI - Technical AI education</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Communities of Practice
+                    </button>
+                    <div class="accordion-content">
+                        <h4>Campus Communities</h4>
+                        <p>Connect with colleagues across campus who are exploring AI in their work. Consider forming or joining a community of practice for sharing experiences, challenges, and successes.</p>
+
+                        <h4>Extension Networks</h4>
+                        <p>Engage with Extension professionals nationally who are working with AI. National Extension organizations may offer forums, webinars, and resources for AI integration in Extension work.</p>
+
+                        <h4>Online Communities</h4>
+                        <p>Numerous online communities focus on AI in education:</p>
+                        <ul>
+                            <li>LinkedIn groups focused on AI in education</li>
+                            <li>Twitter/X communities discussing educational AI</li>
+                            <li>Reddit forums (e.g., r/ArtificialIntelligence, r/ChatGPT)</li>
+                            <li>Specialized Slack or Discord channels</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Staying Current
+                    </button>
+                    <div class="accordion-content">
+                        <h4>Follow Key Developments</h4>
+                        <p>AI technology evolves rapidly. Stay informed about:</p>
+                        <ul>
+                            <li>New models and capabilities</li>
+                            <li>Policy and regulatory developments</li>
+                            <li>Research findings on AI's educational impact</li>
+                            <li>Best practices emerging from early adopters</li>
+                        </ul>
+
+                        <h4>Subscribe to Newsletters</h4>
+                        <p>Several newsletters provide curated AI news and insights:</p>
+                        <ul>
+                            <li>The Batch (DeepLearning.AI)</li>
+                            <li>Import AI</li>
+                            <li>AI Weekly</li>
+                            <li>EDUCAUSE AI newsletter</li>
+                        </ul>
+
+                        <h4>Attend Conferences</h4>
+                        <p>Educational technology and AI conferences offer opportunities to learn from experts and connect with peers:</p>
+                        <ul>
+                            <li>EDUCAUSE - Higher education technology</li>
+                            <li>AERA (American Educational Research Association)</li>
+                            <li>Specialized AI in education conferences</li>
+                            <li>Extension-specific technology conferences</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Experimental Learning
+                    </button>
+                    <div class="accordion-content">
+                        <h4>Hands-On Practice</h4>
+                        <p>The best way to learn about AI is to use it:</p>
+                        <ul>
+                            <li>Experiment with different tools</li>
+                            <li>Try various prompting techniques</li>
+                            <li>Apply AI to real work challenges</li>
+                            <li>Reflect on what works and what doesn't</li>
+                        </ul>
+
+                        <h4>Document Your Learning</h4>
+                        <p>Keep a journal of your AI experiments:</p>
+                        <ul>
+                            <li>Successful prompts and strategies</li>
+                            <li>Lessons learned from failures</li>
+                            <li>Questions that arise</li>
+                            <li>Ideas for future applications</li>
+                        </ul>
+                        <p>This documentation supports your learning and can be valuable for sharing with colleagues.</p>
+
+                        <h4>Share and Collaborate</h4>
+                        <p>Learning is enhance
+d through collaboration:</p>
+                        <ul>
+                            <li>Share discoveries with colleagues</li>
+                            <li>Learn from others' experiences</li>
+                            <li>Build a community of practice</li>
+                            <li>Contribute to collective knowledge</li>
+                        </ul>
+                        <p>By sharing your learning journey, you help build collective understanding and support others in developing their AI literacy.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Tab navigation functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            const allTabs = document.querySelectorAll('.tab-content');
+            allTabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Remove active class from all nav buttons
+            const allButtons = document.querySelectorAll('nav button');
+            allButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Show selected tab content
+            const selectedTab = document.getElementById('content-' + tabName);
+            if (selectedTab) {
+                selectedTab.classList.add('active');
+            }
+
+            // Add active class to selected nav button
+            const selectedButton = document.getElementById('tab-' + tabName);
+            if (selectedButton) {
+                selectedButton.classList.add('active');
+            }
+
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Accordion functionality
+        function toggleAccordion(header) {
+            const content = header.nextElementSibling;
+            const isActive = header.classList.contains('active');
+
+            // Close all accordions in the same container
+            const container = header.closest('.accordion');
+            const allHeaders = container.querySelectorAll('.accordion-header');
+            const allContents = container.querySelectorAll('.accordion-content');
+
+            allHeaders.forEach(h => h.classList.remove('active'));
+            allContents.forEach(c => c.classList.remove('active'));
+
+            // If this accordion wasn't active, open it
+            if (!isActive) {
+                header.classList.add('active');
+                content.classList.add('active');
+            }
+        }
+
+        // Keyboard navigation for tabs
+        document.addEventListener('keydown', function(e) {
+            const navButtons = Array.from(document.querySelectorAll('nav button'));
+            const activeButton = document.querySelector('nav button.active');
+            const currentIndex = navButtons.indexOf(activeButton);
+
+            if (e.key === 'ArrowRight' && currentIndex < navButtons.length - 1) {
+                e.preventDefault();
+                navButtons[currentIndex + 1].click();
+                navButtons[currentIndex + 1].focus();
+            } else if (e.key === 'ArrowLeft' && currentIndex > 0) {
+                e.preventDefault();
+                navButtons[currentIndex - 1].click();
+                navButtons[currentIndex - 1].focus();
+            }
+        });
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ensure home tab is active on load
+            showTab('home');
+        });
+    </script>
+</body>
+</html>
